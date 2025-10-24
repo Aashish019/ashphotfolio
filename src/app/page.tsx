@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="section-padding bg-gray-50">
+      <section id="about" className="section-padding">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">About</h2>
@@ -147,7 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="experience" className="py-20 bg-gray-100">
+      <section id="experience" className="py-20 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
@@ -163,7 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="projects" className="section-padding">
+      <section id="projects" className="section-padding py-10">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Projects</h2>
@@ -235,7 +235,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="education" className="section-padding bg-gray-50">
+      <section id="education" className="section-padding py-10">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Education</h2>
@@ -260,10 +260,6 @@ export default function Home() {
                   Feel free to reach out for collaborations or just a friendly hello. I'm always open to discussing new projects and opportunities.
                 </p>
                 <div className="space-y-4 text-sm">
-                  <a href="tel:+919961308229" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
-                    <span className="w-6">📞</span>
-                    <span>+91 9961308229</span>
-                  </a>
                   <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
                     <span className="w-6">📧</span>
                     <span>aashishanil530@gmail.com</span>
