@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="section-padding">
+      <section id="about" className="section-padding py-20">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">About</h2>
@@ -163,7 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="projects" className="section-padding py-10">
+      <section id="projects" className="section-padding py-20">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Projects</h2>
