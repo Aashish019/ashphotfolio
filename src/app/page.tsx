@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <section className="min-h-screen flex items-center justify-center section-padding">
+      <section className="min-h-screen flex items-center justify-center section-padding px-5">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto fade-in">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight">
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="section-padding py-20">
+      <section id="about" className="section-padding py-20 px-5">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">About</h2>
@@ -147,7 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="experience" className="py-20 ">
+      <section id="experience" className="py-20 px-5 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
@@ -163,7 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="projects" className="section-padding py-20">
+      <section id="projects" className="section-padding py-20 px-5">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Projects</h2>
@@ -235,7 +235,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="education" className="section-padding py-10">
+      <section id="education" className="section-padding py-10 px-5">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Education</h2>
@@ -250,7 +250,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="section-padding">
+      <section id="contact" className="section-padding px-5">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
