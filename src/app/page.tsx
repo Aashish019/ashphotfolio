@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#30014]] text-white">
-      <nav className="fixed top-0 w-full bg-[#0a0a0a] backdrop-blur-md z-50 ">
+    <main className="min-h-screen bg-[#01000A] text-white">
+      <nav className="fixed top-0 w-full bg-[#01000A] backdrop-blur-md z-50 ">
         <div className="container mx-auto px-6 md:px-8">
           <div className="flex justify-between items-center h-16 text-[#8314eb]">
             <span className="text-xl font-bold gradient-text ">

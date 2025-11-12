@@ -20,6 +20,10 @@
     --Text-H: #8314eb;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
 
 body {
   background: var(--background);
