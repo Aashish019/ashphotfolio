@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --Text-H: #b49bff;
 }
 
 @theme inline {
@@ -16,6 +17,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --Text-H: #8314eb;
   }
 }
 
@@ -23,4 +25,102 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  
 }
+h1, h2, h3, h4, h5, h6 {
+  color: var(--Text-H);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+@media (prefers-reduced-motion) {
+  .animate-fadeInUp {
+    animation: none;
+  }
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: .15em solid currentColor;
+  /* Adjust width to content length or use 100% if container width equals text length */
+  animation: typing 3s steps(30, end) forwards, blinkCaret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent; }
+  50% { border-color: currentColor; }
+}
+
+@media (prefers-reduced-motion) {
+  .typewriter {
+    animation: none;
+    border-right: none;
+  }
+}
+
+
+.reveal-letters {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-letters::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: .1em;
+  background: currentColor;
+  transition: width .4s ease;
+}
+
+.reveal-letters:hover::after {
+  width: 100%;
+}
+
+.reveal-letters span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.reveal-letters:hover span {
+  animation: letterReveal .6s ease forwards;
+}
+
+@keyframes letterReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

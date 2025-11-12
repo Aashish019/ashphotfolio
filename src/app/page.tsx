@@ -1,10 +1,10 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black">
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+    <main className="min-h-screen bg-[#30014]] text-white">
+      <nav className="fixed top-0 w-full bg-[#0a0a0a] backdrop-blur-md z-50 ">
         <div className="container mx-auto px-6 md:px-8">
-          <div className="flex justify-between items-center h-16">
-            <span className="text-xl font-bold gradient-text">
+          <div className="flex justify-between items-center h-16 text-[#8314eb]">
+            <span className="text-xl font-bold gradient-text ">
               Aashish Anil
             </span>
             <div className="hidden md:flex space-x-8 text-sm">
@@ -28,7 +28,7 @@ export default function Home() {
       <section className="min-h-screen flex items-center justify-center section-padding px-5">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto fade-in">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight  animate-fadeInUp text-[#b49bff]">
               Cloud & DevOps
               <br />
               <span className="gradient-text">Engineer</span>
@@ -49,7 +49,7 @@ export default function Home() {
               <div className="pt-4">
                 <a
                   href="#contact"
-                  className="inline-flex items-center text-sm border border-black px-6 py-3 hover:bg-black hover:text-white transition-colors"
+                  className="inline-flex items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
                 >
                   Let's Connect
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,11 +151,11 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
               <h3 className="text-xl font-semibold">Associate Web Developer</h3>
               <p className="text-gray-600 mt-1">Copious Infotech • January 2024 - Present</p>
             </div>
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-violet-200 backdrop-blur-md rounded-lg shadow-md p-6">
               <h3 className="text-xl font-semibold">Flutter Intern</h3>
               <p className="text-gray-600 mt-1">Maverixpro Technology • July 2023 - January 2024</p>
             </div>
@@ -175,18 +175,18 @@ export default function Home() {
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced deployment time by 30%</li>
                     <li>→ Achieved 95% defect-free code with SonarQube</li>
                     <li>→ Decreased manual configuration by 40%</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Jenkins</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Kubernetes</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Docker</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Jenkins</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Kubernetes</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Docker</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full"></div>
+                <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -196,18 +196,18 @@ export default function Home() {
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced setup time by 50%</li>
                     <li>→ Achieved 99.9% uptime</li>
                     <li>→ 25% reduction in deployment errors</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">AWS</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Terraform</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">IaC</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">AWS</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Terraform</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">IaC</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full md:order-1"></div>
+                <div className="bg-violet-200 rounded-lg aspect-video w-full md:order-1"></div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -217,18 +217,18 @@ export default function Home() {
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Python-based glaucoma detection system using fundus image analysis with containerized deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Containerized with Docker</li>
                     <li>→ Automated CI/CD with GitHub Actions</li>
                     <li>→ Published to Docker Hub</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Python</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">GitHub Actions</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Python</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Docker</span>
+                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">GitHub Actions</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full"></div>
+                <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
               </div>
             </div>
           </div>
@@ -260,11 +260,11 @@ export default function Home() {
                   Feel free to reach out for collaborations or just a friendly hello. I'm always open to discussing new projects and opportunities.
                 </p>
                 <div className="space-y-4 text-sm">
-                  <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
+                  <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
                     <span className="w-6">📧</span>
                     <span>aashishanil530@gmail.com</span>
                   </a>
-                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
+                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
                     <span className="w-6">💼</span>
                     <span>linkedin.com/in/aashishanil</span>
                   </a>
@@ -278,7 +278,7 @@ export default function Home() {
                       type="text"
                       id="name"
                       name="name"
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     />
                   </div>
@@ -288,7 +288,7 @@ export default function Home() {
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     />
                   </div>
@@ -298,13 +298,13 @@ export default function Home() {
                       id="message"
                       name="message"
                       rows={4}
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     ></textarea>
                   </div>
                   <button
                     type="submit"
-                    className="w-full border border-black px-6 py-3 hover:bg-black hover:text-white transition-colors text-sm"
+                    className="w-full border border-violet-600 px-6 py-3 hover:bg-violet-600 hover:text-white transition-colors text-sm"
                   >
                     Send Message
                   </button>
