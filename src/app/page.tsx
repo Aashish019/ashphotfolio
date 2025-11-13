@@ -1,9 +1,28 @@
+"use client";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
+
+
+
 export default function Home() {
+const homeTitle = useScrollAnimation("animate-fadeInUp");
+const aboutTitle = useScrollAnimation("animate-fadeInLeft");
+
+const experienceSection = useScrollAnimation("animate-fadeInUp");
+
+const projectsTitle = useScrollAnimation("animate-fadeInUp");
+
+const projectBlock1 = useScrollAnimation("animate-fadeInLeft");
+const projectBlock2 = useScrollAnimation("animate-fadeInRight");
+const projectBlock3 = useScrollAnimation("animate-fadeInLeft");
+
+const educationTitle = useScrollAnimation("animate-fadeInUp");
+const contactTitle = useScrollAnimation("animate-fadeIn");
+
   return (
     <main className="min-h-screen bg-[#01000A] text-white">
       <nav className="fixed top-0 w-full bg-[#01000A] backdrop-blur-md z-50 ">
         <div className="container mx-auto px-6 md:px-8">
-          <div className="flex justify-between items-center h-16 text-[#8314eb]">
+          <div className="flex justify-between items-center h-16 text-[#8314eb] animate-fadeInDown">
             <span className="text-xl font-bold gradient-text ">
               Aashish Anil
             </span>
@@ -25,9 +44,9 @@ export default function Home() {
         </div>
       </nav>
 
-      <section className="min-h-screen flex items-center justify-center section-padding px-5">
+      <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto fade-in animate-fadeInUp">
+          <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight   text-[#b49bff]">
               Cloud & DevOps
               <br />
@@ -64,14 +83,14 @@ export default function Home() {
 
       <section id="about" className="section-padding py-20 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">About</h2>
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={aboutTitle}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight " >About</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 text-lg leading-relaxed mb-8 ">
                   A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions.
                 </p>
-                <div className="space-y-8">
+                <div className="space-y-8 ">
                   <div>
                     <h3 className="text-sm font-medium text-gray-400 mb-4">CERTIFICATIONS</h3>
                     <ul className="space-y-4">
@@ -97,7 +116,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="space-y-8">
+              <div className="space-y-8 ">
                 <div>
                   <h3 className="text-sm font-medium text-gray-400 mb-4">TECHNICAL SKILLS</h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -147,8 +166,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="experience" className="py-20 px-5 ">
-        <div className="container mx-auto px-4">
+      <section id="experience" className="py-20 px-5">
+        <div className="container mx-auto px-4 animate-on-scroll" ref={experienceSection} >
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
@@ -165,10 +184,10 @@ export default function Home() {
 
       <section id="projects" className="section-padding py-20 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Projects</h2>
+          <div className="max-w-5xl mx-auto fade-in ">
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight animate-on-scroll" ref={projectsTitle}>Projects</h2>
             <div className="space-y-24">
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock1}>
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">01 / DEVOPS</span>
                   <h3 className="text-2xl font-bold mb-4">BoardGame Pipeline</h3>
@@ -189,7 +208,7 @@ export default function Home() {
                 <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock2}>
                 <div className="md:order-2">
                   <span className="text-sm text-gray-400 mb-4 block">02 / CLOUD</span>
                   <h3 className="text-2xl font-bold mb-4">AWS Infrastructure Automation</h3>
@@ -210,7 +229,7 @@ export default function Home() {
                 <div className="bg-violet-200 rounded-lg aspect-video w-full md:order-1"></div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock3}>
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">03 / ML</span>
                   <h3 className="text-2xl font-bold mb-4">GlauDec</h3>
@@ -237,7 +256,7 @@ export default function Home() {
 
       <section id="education" className="section-padding py-10 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={educationTitle}>
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Education</h2>
             <div className="max-w-3xl">
               <div className="space-y-2">
@@ -252,7 +271,7 @@ export default function Home() {
 
       <section id="contact" className="section-padding px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={contactTitle}>
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
@@ -323,3 +342,4 @@ export default function Home() {
     </main>
   );
 }
+
