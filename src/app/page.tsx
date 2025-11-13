@@ -8,16 +8,16 @@ export default function Home() {
               Aashish Anil
             </span>
             <div className="hidden md:flex space-x-8 text-sm">
-              <a href="#about" className="hover:text-blue-500 transition-colors">
+              <a href="#about" className="hover:text-white transition-colors">
                 ABOUT
               </a>
-              <a href="#experience" className="hover:text-blue-500 transition-colors">
+              <a href="#experience" className="hover:text-white transition-colors">
                 EXPERIENCE
               </a>
-              <a href="#projects" className="hover:text-blue-500 transition-colors">
+              <a href="#projects" className="hover:text-white transition-colors">
                 PROJECTS
               </a>
-              <a href="#contact" className="hover:text-blue-500 transition-colors">
+              <a href="#contact" className="hover:text-white transition-colors">
                 CONTACT
               </a>
             </div>
@@ -27,22 +27,22 @@ export default function Home() {
 
       <section className="min-h-screen flex items-center justify-center section-padding px-5">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto fade-in">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight  animate-fadeInUp text-[#b49bff]">
+          <div className="max-w-4xl mx-auto fade-in animate-fadeInUp">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight   text-[#b49bff]">
               Cloud & DevOps
               <br />
-              <span className="gradient-text">Engineer</span>
+              <span className="gradient-text ">Engineer</span>
             </h1>
             <div className="space-y-6 text-gray-600">
-              <p className="text-lg md:text-xl max-w-2xl">
+              <p className="text-lg md:text-xl max-w-2xl ">
                 A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
               </p>
               <div className="flex flex-col md:flex-row gap-4 text-sm">
                 <span>📍 Kannur, Kerala</span>
-                <a href="mailto:aashishanil530@gmail.com" className="hover:text-blue-500 transition-colors">
+                <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
                   ✉️ aashishanil530@gmail.com
                 </a>
-                <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+                <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   💼 LinkedIn
                 </a>
               </div>
