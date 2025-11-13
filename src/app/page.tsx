@@ -47,10 +47,10 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
       <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight   text-[#b49bff]">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
               Cloud & DevOps
               <br />
-              <span className="gradient-text ">Engineer</span>
+              <span className="gradient-text animate-color-shift">Engineer</span>
             </h1>
             <div className="space-y-6 text-gray-600">
               <p className="text-lg md:text-xl max-w-2xl ">
@@ -68,7 +68,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <div className="pt-4">
                 <a
                   href="#contact"
-                  className="inline-flex items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
+                  className="inline-flex animate-neon items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
                 >
                   Let's Connect
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,8 +171,12 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-semibold">DevOps Developer</h3>
+              <p className="text-gray-600 mt-1">McMillan Technologies And Consultancy Services PVT LTD • March 2024 - Present</p>
+            </div>
+            <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
               <h3 className="text-xl font-semibold">Associate Web Developer</h3>
-              <p className="text-gray-600 mt-1">Copious Infotech • January 2024 - Present</p>
+              <p className="text-gray-600 mt-1">Copious Infotech • January 2024 - February 2024</p>
             </div>
             <div className="bg-violet-200 backdrop-blur-md rounded-lg shadow-md p-6">
               <h3 className="text-xl font-semibold">Flutter Intern</h3>
