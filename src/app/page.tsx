@@ -290,7 +290,24 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 </div>
               </div>
               <div>
-                <form className="space-y-6">
+                <form className="space-y-6"
+                onSubmit={(e) => {
+                e.preventDefault();
+
+                const form = e.target as HTMLFormElement;
+                const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+                const mailToLink = `mailto:aashishanil530@gmail.com?subject=New message from ${encodeURIComponent(
+                  name
+                )}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(
+                  email
+                )}%0A%0A${encodeURIComponent(message)}`;
+
+                window.location.href = mailToLink;
+              }}
+                >
                   <div>
                     <label htmlFor="name" className="block text-sm mb-2 text-gray-600">Name</label>
                     <input
