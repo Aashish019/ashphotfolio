@@ -266,3 +266,19 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
+.word {
+  transition: color 0.08s ease;
+}
+
+.word.white {
+  color: #ffffff;
+}
+
+.word.violet {
+  color: #7b2cbf;
+}
+
+.word.gray {
+  color: #8a8a8a;
+}

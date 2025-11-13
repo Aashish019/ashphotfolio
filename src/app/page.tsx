@@ -1,4 +1,5 @@
 "use client";
+import AnimatedParagraph from "@/components/AnimatedParagraph";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 
@@ -88,7 +89,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div className="grid md:grid-cols-2 gap-16">
               <div>
                 <p className="text-gray-600 text-lg leading-relaxed mb-8 ">
-                  A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions.
+                  <AnimatedParagraph text="A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions." />
                 </p>
                 <div className="space-y-8 ">
                   <div>
