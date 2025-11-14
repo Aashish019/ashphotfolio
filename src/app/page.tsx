@@ -4,6 +4,7 @@ import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 
 
+
 export default function Home() {
 const homeTitle = useScrollAnimation("animate-fadeInUp");
 const aboutTitle = useScrollAnimation("animate-fadeInLeft");
@@ -171,18 +172,115 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
         <div className="container mx-auto px-4 animate-on-scroll" ref={experienceSection} >
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
-            <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold">DevOps Developer</h3>
-              <p className="text-gray-600 mt-1">McMillan Technologies And Consultancy Services PVT LTD • March 2024 - Present</p>
+            {/* DevOps Developer */}
+            <div className="group">
+            <div
+              className="
+                rounded-2xl
+                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                  bg-[#05010f]               /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      DevOps Developer
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      McMillan Technologies And Consultancy Services PVT LTD •
+                      March 2024 - Present
+                    </p>
+                  </div>              
+                </div>
+              </div>
             </div>
-            <div className= "backdrop-blur-md bg-violet-200 rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold">Associate Web Developer</h3>
-              <p className="text-gray-600 mt-1">Copious Infotech • January 2024 - February 2024</p>
+          </div>
+          <div className="group">
+            <div
+              className="
+                rounded-2xl
+                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                  bg-[#05010f]               /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      Associate Web Developer
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      Copious Infotech • 
+                      January 2024 - February 2024 
+                    </p>
+                  </div>              
+                </div>
+              </div>
             </div>
-            <div className="bg-violet-200 backdrop-blur-md rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold">Flutter Intern</h3>
-              <p className="text-gray-600 mt-1">Maverixpro Technology • July 2023 - January 2024</p>
+          </div>
+          <div className="group">
+            <div
+              className="
+                rounded-2xl
+                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                  bg-[#05010f]               /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      Flutter Intern
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      Maverixpro Technology •
+                      July 2023 - January 2024
+                    </p>
+                  </div>              
+                </div>
+              </div>
             </div>
+          </div>
           </div>
         </div>
       </section>
