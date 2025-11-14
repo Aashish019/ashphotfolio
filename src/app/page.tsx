@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import AnimatedParagraph from "@/components/AnimatedParagraph";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 
@@ -6,6 +7,39 @@ import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 
 export default function Home() {
+   const [showNav, setShowNav] = useState(true);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const navHeight = 64; // navbar ~16 * 4px
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const heroTop = heroRef.current
+        ? heroRef.current.getBoundingClientRect().top
+        : Infinity;
+
+      if (currentY <= 0) {
+        // at the very top -> always show
+        setShowNav(true);
+      } else if (currentY > lastScrollY) {
+        // scrolling DOWN
+        if (heroTop <= navHeight) {
+          // hero text has reached / gone under nav
+          setShowNav(false);
+        }
+      } else {
+        // scrolling UP
+        setShowNav(true);
+      }
+
+      lastScrollY = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 const homeTitle = useScrollAnimation("animate-fadeInUp");
 const aboutTitle = useScrollAnimation("animate-fadeInLeft");
 
@@ -21,8 +55,12 @@ const educationTitle = useScrollAnimation("animate-fadeInUp");
 const contactTitle = useScrollAnimation("animate-fadeIn");
 
   return (
-    <main className="min-h-screen bg-[#01000A] text-white">
-      <nav className="fixed top-0 w-full bg-[#01000A] backdrop-blur-md z-50 ">
+    <main className="min-h-screen text-white ">
+      <nav
+          className={`fixed top-0 w-full backdrop-blur-md z-50 transition-transform duration-300 ${
+            showNav ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
         <div className="container mx-auto px-6 md:px-8">
           <div className="flex justify-between items-center h-16 text-[#8314eb] animate-fadeInDown">
             <span className="text-xl font-bold gradient-text ">
@@ -48,7 +86,8 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
 
       <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
+          <div ref={heroRef}>
+             <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
               Cloud & DevOps
               <br />
@@ -79,6 +118,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 </a>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </section>
@@ -177,7 +217,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div
               className="
                 rounded-2xl
-                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
+                
                 p-[1px]                      /* ≈ 1px white/gradient border */
                 transition-all duration-300
                 group-hover:-translate-y-2
@@ -187,7 +227,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <div
                 className="
                   relative rounded-[1rem]
-                  bg-[#05010f]               /* dark inner card */
+                                 /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
@@ -213,7 +253,6 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div
               className="
                 rounded-2xl
-                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
                 p-[1px]                      /* ≈ 1px white/gradient border */
                 transition-all duration-300
                 group-hover:-translate-y-2
@@ -223,7 +262,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <div
                 className="
                   relative rounded-[1rem]
-                  bg-[#05010f]               /* dark inner card */
+                                 /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
@@ -249,7 +288,6 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div
               className="
                 rounded-2xl
-                bg-gradient-to-r from-white/25 via-[#b49bff] to-white/25
                 p-[1px]                      /* ≈ 1px white/gradient border */
                 transition-all duration-300
                 group-hover:-translate-y-2
@@ -259,7 +297,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <div
                 className="
                   relative rounded-[1rem]
-                  bg-[#05010f]               /* dark inner card */
+                                 /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
@@ -303,9 +341,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <li>→ Decreased manual configuration by 40%</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Jenkins</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Kubernetes</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Docker</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Jenkins</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Kubernetes</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
                   </div>
                 </div>
                 <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
@@ -324,9 +362,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <li>→ 25% reduction in deployment errors</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">AWS</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Terraform</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">IaC</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">AWS</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">Terraform</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">IaC</span>
                   </div>
                 </div>
                 <div className="bg-violet-200 rounded-lg aspect-video w-full md:order-1"></div>
@@ -345,9 +383,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <li>→ Published to Docker Hub</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Python</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-violet-200 text-gray-800 text-sm">GitHub Actions</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Python</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">GitHub Actions</span>
                   </div>
                 </div>
                 <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
