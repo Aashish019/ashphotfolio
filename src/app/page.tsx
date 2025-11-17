@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import AnimatedParagraph from "@/components/AnimatedParagraph";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-
+import Image from "next/image";
 
 
 
@@ -79,6 +79,28 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <a href="#contact" className="hover:text-white transition-colors">
                 CONTACT
               </a>
+              <a
+  href="/Aashish_Anil_CV.pdf"
+  download
+  className="
+    flex items-center gap-2 
+    px-4 py-1 rounded-full
+    border border-white/20 backdrop-blur-sm
+    text-white hover:bg-white/10 transition-all duration-300
+  "
+>
+  <span>Download CV</span>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-4 h-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2m-5-6l-3 3m0 0l-3-3m3 3V4" />
+  </svg>
+</a>
             </div>
           </div>
         </div>
@@ -346,7 +368,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
                   </div>
                 </div>
-                <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/Bgame.png" alt="BoardGame Pipeline" width={500} height={500} />
+                </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock2}>
@@ -367,7 +391,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">IaC</span>
                   </div>
                 </div>
-                <div className="bg-violet-200 rounded-lg aspect-video w-full md:order-1"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full md:order-1 flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/awsInfra.jpg" alt="AWS Infrastructure Automation" width={500} height={500} />
+                </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock3}>
@@ -388,7 +414,9 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">GitHub Actions</span>
                   </div>
                 </div>
-                <div className="bg-violet-200 rounded-lg aspect-video w-full"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/glauDec.jpg" alt="glauDec" width={500} height={500} />
+                </div>
               </div>
             </div>
           </div>
