@@ -1,55 +1,137 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import AnimatedParagraph from "@/components/AnimatedParagraph";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
+import Image from "next/image";
+
+
+
 export default function Home() {
+   const [showNav, setShowNav] = useState(true);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const navHeight = 64; // navbar ~16 * 4px
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const heroTop = heroRef.current
+        ? heroRef.current.getBoundingClientRect().top
+        : Infinity;
+
+      if (currentY <= 0) {
+        // at the very top -> always show
+        setShowNav(true);
+      } else if (currentY > lastScrollY) {
+        // scrolling DOWN
+        if (heroTop <= navHeight) {
+          // hero text has reached / gone under nav
+          setShowNav(false);
+        }
+      } else {
+        // scrolling UP
+        setShowNav(true);
+      }
+
+      lastScrollY = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+const homeTitle = useScrollAnimation("animate-fadeInUp");
+const aboutTitle = useScrollAnimation("animate-fadeInLeft");
+
+const experienceSection = useScrollAnimation("animate-fadeInUp");
+
+const projectsTitle = useScrollAnimation("animate-fadeInUp");
+
+const projectBlock1 = useScrollAnimation("animate-fadeInLeft");
+const projectBlock2 = useScrollAnimation("animate-fadeInRight");
+const projectBlock3 = useScrollAnimation("animate-fadeInLeft");
+
+const educationTitle = useScrollAnimation("animate-fadeInUp");
+const contactTitle = useScrollAnimation("animate-fadeIn");
+
   return (
-    <main className="min-h-screen bg-white text-black">
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+    <main className="min-h-screen text-white ">
+      <nav
+          className={`fixed top-0 w-full backdrop-blur-md z-50 transition-transform duration-300 ${
+            showNav ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
         <div className="container mx-auto px-6 md:px-8">
-          <div className="flex justify-between items-center h-16">
-            <span className="text-xl font-bold gradient-text">
+          <div className="flex justify-between items-center h-16 text-[#8314eb] animate-fadeInDown">
+            <span className="text-xl font-bold gradient-text ">
               Aashish Anil
             </span>
             <div className="hidden md:flex space-x-8 text-sm">
-              <a href="#about" className="hover:text-blue-500 transition-colors">
+              <a href="#about" className="hover:text-white transition-colors">
                 ABOUT
               </a>
-              <a href="#experience" className="hover:text-blue-500 transition-colors">
+              <a href="#experience" className="hover:text-white transition-colors">
                 EXPERIENCE
               </a>
-              <a href="#projects" className="hover:text-blue-500 transition-colors">
+              <a href="#projects" className="hover:text-white transition-colors">
                 PROJECTS
               </a>
-              <a href="#contact" className="hover:text-blue-500 transition-colors">
+              <a href="#contact" className="hover:text-white transition-colors">
                 CONTACT
               </a>
+              <a
+  href="/Aashish_Anil_CV.pdf"
+  download
+  className="
+    flex items-center gap-2 
+    px-4 py-1 rounded-full
+    border border-white/20 backdrop-blur-sm
+    text-white hover:bg-white/10 transition-all duration-300
+  "
+>
+  <span>Download CV</span>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-4 h-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2m-5-6l-3 3m0 0l-3-3m3 3V4" />
+  </svg>
+</a>
             </div>
           </div>
         </div>
       </nav>
 
-      <section className="min-h-screen flex items-center justify-center section-padding px-5">
+      <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto fade-in">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight">
+          <div ref={heroRef}>
+             <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
               Cloud & DevOps
               <br />
-              <span className="gradient-text">Engineer</span>
+              <span className="gradient-text animate-color-shift">Engineer</span>
             </h1>
             <div className="space-y-6 text-gray-600">
-              <p className="text-lg md:text-xl max-w-2xl">
+              <p className="text-lg md:text-xl max-w-2xl ">
                 A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
               </p>
               <div className="flex flex-col md:flex-row gap-4 text-sm">
                 <span>📍 Kannur, Kerala</span>
-                <a href="mailto:aashishanil530@gmail.com" className="hover:text-blue-500 transition-colors">
+                <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
                   ✉️ aashishanil530@gmail.com
                 </a>
-                <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+                <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   💼 LinkedIn
                 </a>
               </div>
               <div className="pt-4">
                 <a
                   href="#contact"
-                  className="inline-flex items-center text-sm border border-black px-6 py-3 hover:bg-black hover:text-white transition-colors"
+                  className="inline-flex animate-neon items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
                 >
                   Let's Connect
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,19 +141,20 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </div>
         </div>
       </section>
 
       <section id="about" className="section-padding py-20 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">About</h2>
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={aboutTitle}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight " >About</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                  A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions.
+                <p className="text-gray-600 text-lg leading-relaxed mb-8 ">
+                  <AnimatedParagraph text="A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions." />
                 </p>
-                <div className="space-y-8">
+                <div className="space-y-8 ">
                   <div>
                     <h3 className="text-sm font-medium text-gray-400 mb-4">CERTIFICATIONS</h3>
                     <ul className="space-y-4">
@@ -97,7 +180,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="space-y-8">
+              <div className="space-y-8 ">
                 <div>
                   <h3 className="text-sm font-medium text-gray-400 mb-4">TECHNICAL SKILLS</h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -147,88 +230,193 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="experience" className="py-20 px-5 ">
-        <div className="container mx-auto px-4">
+      <section id="experience" className="py-20 px-5">
+        <div className="container mx-auto px-4 animate-on-scroll" ref={experienceSection} >
           <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
           <div className="max-w-4xl mx-auto space-y-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold">Associate Web Developer</h3>
-              <p className="text-gray-600 mt-1">Copious Infotech • January 2024 - Present</p>
+            {/* DevOps Developer */}
+            <div className="group">
+            <div
+              className="
+                rounded-2xl
+                
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                                 /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      DevOps Developer
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      McMillan Technologies And Consultancy Services PVT LTD •
+                      March 2024 - Present
+                    </p>
+                  </div>              
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold">Flutter Intern</h3>
-              <p className="text-gray-600 mt-1">Maverixpro Technology • July 2023 - January 2024</p>
+          </div>
+          <div className="group">
+            <div
+              className="
+                rounded-2xl
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                                 /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      Associate Web Developer
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      Copious Infotech • 
+                      January 2024 - February 2024 
+                    </p>
+                  </div>              
+                </div>
+              </div>
             </div>
+          </div>
+          <div className="group">
+            <div
+              className="
+                rounded-2xl
+                p-[1px]                      /* ≈ 1px white/gradient border */
+                transition-all duration-300
+                group-hover:-translate-y-2
+                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
+              "
+            >
+              <div
+                className="
+                  relative rounded-[1rem]
+                                 /* dark inner card */
+                  px-6 py-5
+                  flex flex-col gap-3
+                  shadow-lg
+                "
+              >
+                <div className="flex items-start gap-3">
+                  {/* optional logo circle */}
+
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-white">
+                      Flutter Intern
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-300">
+                      Maverixpro Technology •
+                      July 2023 - January 2024
+                    </p>
+                  </div>              
+                </div>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </section>
 
       <section id="projects" className="section-padding py-20 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Projects</h2>
+          <div className="max-w-5xl mx-auto fade-in ">
+            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight animate-on-scroll" ref={projectsTitle}>Projects</h2>
             <div className="space-y-24">
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock1}>
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">01 / DEVOPS</span>
                   <h3 className="text-2xl font-bold mb-4">BoardGame Pipeline</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced deployment time by 30%</li>
                     <li>→ Achieved 95% defect-free code with SonarQube</li>
                     <li>→ Decreased manual configuration by 40%</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Jenkins</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Kubernetes</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Docker</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Jenkins</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Kubernetes</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/Bgame.png" alt="BoardGame Pipeline" width={500} height={500} />
+                </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock2}>
                 <div className="md:order-2">
                   <span className="text-sm text-gray-400 mb-4 block">02 / CLOUD</span>
                   <h3 className="text-2xl font-bold mb-4">AWS Infrastructure Automation</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced setup time by 50%</li>
                     <li>→ Achieved 99.9% uptime</li>
                     <li>→ 25% reduction in deployment errors</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">AWS</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Terraform</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">IaC</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">AWS</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">Terraform</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">IaC</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full md:order-1"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full md:order-1 flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/awsInfra.jpg" alt="AWS Infrastructure Automation" width={500} height={500} />
+                </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock3}>
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">03 / ML</span>
                   <h3 className="text-2xl font-bold mb-4">GlauDec</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     Python-based glaucoma detection system using fundus image analysis with containerized deployment.
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600 mb-6">
+                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Containerized with Docker</li>
                     <li>→ Automated CI/CD with GitHub Actions</li>
                     <li>→ Published to Docker Hub</li>
                   </ul>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Python</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm">GitHub Actions</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Python</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
+                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">GitHub Actions</span>
                   </div>
                 </div>
-                <div className="bg-gray-50 aspect-video w-full"></div>
+                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
+                  <Image className="rounded-lg object-contain" src="/glauDec.jpg" alt="glauDec" width={500} height={500} />
+                </div>
               </div>
             </div>
           </div>
@@ -237,7 +425,7 @@ export default function Home() {
 
       <section id="education" className="section-padding py-10 px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={educationTitle}>
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Education</h2>
             <div className="max-w-3xl">
               <div className="space-y-2">
@@ -252,7 +440,7 @@ export default function Home() {
 
       <section id="contact" className="section-padding px-5">
         <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in">
+          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={contactTitle}>
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
@@ -260,25 +448,42 @@ export default function Home() {
                   Feel free to reach out for collaborations or just a friendly hello. I'm always open to discussing new projects and opportunities.
                 </p>
                 <div className="space-y-4 text-sm">
-                  <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
+                  <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
                     <span className="w-6">📧</span>
                     <span>aashishanil530@gmail.com</span>
                   </a>
-                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-blue-500 transition-colors">
+                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
                     <span className="w-6">💼</span>
                     <span>linkedin.com/in/aashishanil</span>
                   </a>
                 </div>
               </div>
               <div>
-                <form className="space-y-6">
+                <form className="space-y-6"
+                onSubmit={(e) => {
+                e.preventDefault();
+
+                const form = e.target as HTMLFormElement;
+                const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+                const mailToLink = `mailto:aashishanil530@gmail.com?subject=New message from ${encodeURIComponent(
+                  name
+                )}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(
+                  email
+                )}%0A%0A${encodeURIComponent(message)}`;
+
+                window.location.href = mailToLink;
+              }}
+                >
                   <div>
                     <label htmlFor="name" className="block text-sm mb-2 text-gray-600">Name</label>
                     <input
                       type="text"
                       id="name"
                       name="name"
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     />
                   </div>
@@ -288,7 +493,7 @@ export default function Home() {
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     />
                   </div>
@@ -298,13 +503,13 @@ export default function Home() {
                       id="message"
                       name="message"
                       rows={4}
-                      className="w-full px-4 py-2 border border-gray-200 focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
                       required
                     ></textarea>
                   </div>
                   <button
                     type="submit"
-                    className="w-full border border-black px-6 py-3 hover:bg-black hover:text-white transition-colors text-sm"
+                    className="w-full border border-violet-600 px-6 py-3 hover:bg-violet-600 hover:text-white transition-colors text-sm"
                   >
                     Send Message
                   </button>
@@ -323,3 +528,4 @@ export default function Home() {
     </main>
   );
 }
+
