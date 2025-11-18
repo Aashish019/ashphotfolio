@@ -115,7 +115,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               <br />
               <span className="gradient-text animate-color-shift">Engineer</span>
             </h1>
-            <div className="space-y-6 text-gray-600">
+            <div className="space-y-6 text-white">
               <p className="text-lg md:text-xl max-w-2xl ">
                 A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
               </p>
@@ -151,7 +151,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight " >About</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8 ">
+                <p className="text-white text-lg leading-relaxed mb-8 ">
                   <AnimatedParagraph text="A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions." />
                 </p>
                 <div className="space-y-8 ">
@@ -161,19 +161,19 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                       <li className="flex items-start">
                         <div className="flex-1">
                           <h4 className="font-medium">Jenkins</h4>
-                          <p className="text-sm text-gray-500">KodeKloud • September 2024</p>
+                          <p className="text-sm text-white">KodeKloud • September 2024</p>
                         </div>
                       </li>
                       <li className="flex items-start">
                         <div className="flex-1">
                           <h4 className="font-medium">Docker and Kubernetes Masterclass</h4>
-                          <p className="text-sm text-gray-500">Udemy • March 2024</p>
+                          <p className="text-sm text-white">Udemy • March 2024</p>
                         </div>
                       </li>
                       <li className="flex items-start">
                         <div className="flex-1">
                           <h4 className="font-medium">Flutter Developer</h4>
-                          <p className="text-sm text-gray-500">MaverixPro Ltd • January 2024</p>
+                          <p className="text-sm text-white">MaverixPro Ltd • January 2024</p>
                         </div>
                       </li>
                     </ul>
@@ -186,7 +186,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-medium mb-2">Cloud & Infrastructure</h4>
-                      <ul className="space-y-1 text-sm text-gray-600">
+                      <ul className="space-y-1 text-sm text-white">
                         <li>AWS (EC2, S3, VPC)</li>
                         <li>Terraform</li>
                         <li>Docker</li>
@@ -195,7 +195,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     </div>
                     <div>
                       <h4 className="font-medium mb-2">CI/CD & DevOps</h4>
-                      <ul className="space-y-1 text-sm text-gray-600">
+                      <ul className="space-y-1 text-sm text-white">
                         <li>Jenkins</li>
                         <li>GitHub Actions</li>
                         <li>Git</li>
@@ -208,7 +208,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                   <h3 className="text-sm font-medium text-gray-400 mb-4">PROGRAMMING</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <ul className="space-y-1 text-sm text-gray-600">
+                      <ul className="space-y-1 text-sm text-white">
                         <li>Python</li>
                         <li>Bash</li>
                         <li>C</li>
@@ -217,7 +217,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     </div>
                     <div>
                       <h4 className="font-medium mb-2">Databases</h4>
-                      <ul className="space-y-1 text-sm text-gray-600">
+                      <ul className="space-y-1 text-sm text-white">
                         <li>MySQL</li>
                         <li>MongoDB</li>
                       </ul>
@@ -354,7 +354,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">01 / DEVOPS</span>
                   <h3 className="text-2xl font-bold mb-4">BoardGame Pipeline</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-white mb-6 leading-relaxed">
                     Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment.
                   </p>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
@@ -377,7 +377,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 <div className="md:order-2">
                   <span className="text-sm text-gray-400 mb-4 block">02 / CLOUD</span>
                   <h3 className="text-2xl font-bold mb-4">AWS Infrastructure Automation</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-white mb-6 leading-relaxed">
                     Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment.
                   </p>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
@@ -400,7 +400,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">03 / ML</span>
                   <h3 className="text-2xl font-bold mb-4">GlauDec</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-white mb-6 leading-relaxed">
                     Python-based glaucoma detection system using fundus image analysis with containerized deployment.
                   </p>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
@@ -430,8 +430,8 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div className="max-w-3xl">
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold">Bachelor of Technology</h3>
-                <p className="text-gray-600">Computer Science</p>
-                <p className="text-sm text-gray-500">St. Thomas College of Engineering and Technology • 2019 - 2023</p>
+                <p className="text-white">Computer Science</p>
+                <p className="text-sm text-white">St. Thomas College of Engineering and Technology • 2019 - 2023</p>
               </div>
             </div>
           </div>
@@ -444,7 +444,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-white text-lg leading-relaxed mb-8">
                   Feel free to reach out for collaborations or just a friendly hello. I'm always open to discussing new projects and opportunities.
                 </p>
                 <div className="space-y-4 text-sm">
@@ -478,7 +478,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               }}
                 >
                   <div>
-                    <label htmlFor="name" className="block text-sm mb-2 text-gray-600">Name</label>
+                    <label htmlFor="name" className="block text-sm mb-2 text-white">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -488,7 +488,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm mb-2 text-gray-600">Email</label>
+                    <label htmlFor="email" className="block text-sm mb-2 text-white">Email</label>
                     <input
                       type="email"
                       id="email"
@@ -498,7 +498,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                     />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm mb-2 text-gray-600">Message</label>
+                    <label htmlFor="message" className="block text-sm mb-2 text-white">Message</label>
                     <textarea
                       id="message"
                       name="message"
@@ -520,7 +520,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
         </div>
       </section>
       
-      <footer className="py-8 text-center text-sm text-gray-500">
+      <footer className="py-8 text-center text-sm text-white">
         <div className="container mx-auto">
           <p>© 2025 Aashish Anil. All rights reserved.</p>
         </div>
