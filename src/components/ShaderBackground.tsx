@@ -100,11 +100,11 @@ export default function ShaderBackground() {
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     const positions = new Float32Array([
       -1, -1,
-       1, -1,
-      -1,  1,
-      -1,  1,
-       1, -1,
-       1,  1,
+      1, -1,
+      -1, 1,
+      -1, 1,
+      1, -1,
+      1, 1,
     ]);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 
@@ -116,7 +116,7 @@ export default function ShaderBackground() {
     const iTimeLoc = gl.getUniformLocation(program, "iTime");
     const iMouseLoc = gl.getUniformLocation(program, "iMouse");
 
-    let startTime = performance.now();
+    const startTime = performance.now();
     let animationFrameId: number;
 
     let mouseX = 0;
