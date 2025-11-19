@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import AnimatedParagraph from "@/components/AnimatedParagraph";
+import TypewriterEffect from "@/components/TypewriterEffect";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 import Image from "next/image";
 
@@ -115,9 +116,9 @@ export default function Home() {
                 <span className="gradient-text animate-color-shift">Engineer</span>
               </h1>
               <div className="space-y-6 text-white">
-                <p className="text-lg md:text-xl max-w-2xl ">
-                  A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
-                </p>
+                <div className="text-lg md:text-xl max-w-2xl text-white">
+                  <TypewriterEffect text="A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions." />
+                </div>
                 <div className="flex flex-col md:flex-row gap-4 text-sm">
                   <span>📍 Kannur, Kerala</span>
                   <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
@@ -150,9 +151,9 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight " >About</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-white text-lg leading-relaxed mb-8 ">
+                <div className="text-white text-lg leading-relaxed mb-8 ">
                   <AnimatedParagraph text="A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions." />
-                </p>
+                </div>
                 <div className="space-y-8 ">
                   <div>
                     <h3 className="text-sm font-medium text-gray-400 mb-4">CERTIFICATIONS</h3>
@@ -353,9 +354,9 @@ export default function Home() {
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">01 / DEVOPS</span>
                   <h3 className="text-2xl font-bold mb-4">BoardGame Pipeline</h3>
-                  <p className="text-white mb-6 leading-relaxed">
-                    Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment.
-                  </p>
+                  <div className="text-white mb-6 leading-relaxed">
+                    <TypewriterEffect text="Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment." />
+                  </div>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced deployment time by 30%</li>
                     <li>→ Achieved 95% defect-free code with SonarQube</li>
@@ -376,9 +377,9 @@ export default function Home() {
                 <div className="md:order-2">
                   <span className="text-sm text-gray-400 mb-4 block">02 / CLOUD</span>
                   <h3 className="text-2xl font-bold mb-4">AWS Infrastructure Automation</h3>
-                  <p className="text-white mb-6 leading-relaxed">
-                    Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment.
-                  </p>
+                  <div className="text-white mb-6 leading-relaxed">
+                    <TypewriterEffect text="Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment." />
+                  </div>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Reduced setup time by 50%</li>
                     <li>→ Achieved 99.9% uptime</li>
@@ -399,9 +400,9 @@ export default function Home() {
                 <div>
                   <span className="text-sm text-gray-400 mb-4 block">03 / ML</span>
                   <h3 className="text-2xl font-bold mb-4">GlauDec</h3>
-                  <p className="text-white mb-6 leading-relaxed">
-                    Python-based glaucoma detection system using fundus image analysis with containerized deployment.
-                  </p>
+                  <div className="text-white mb-6 leading-relaxed">
+                    <TypewriterEffect text="Python-based glaucoma detection system using fundus image analysis with containerized deployment." />
+                  </div>
                   <ul className="space-y-2 text-sm text-violet-600 mb-6">
                     <li>→ Containerized with Docker</li>
                     <li>→ Automated CI/CD with GitHub Actions</li>
@@ -443,9 +444,9 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
             <div className="grid md:grid-cols-2 gap-16">
               <div>
-                <p className="text-white text-lg leading-relaxed mb-8">
-                  Feel free to reach out for collaborations or just a friendly hello. I&apos;m always open to discussing new projects and opportunities.
-                </p>
+                <div className="text-white text-lg leading-relaxed mb-8">
+                  <TypewriterEffect text="Feel free to reach out for collaborations or just a friendly hello. I&apos;m always open to discussing new projects and opportunities." />
+                </div>
                 <div className="space-y-4 text-sm">
                   <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
                     <span className="w-6">📧</span>
