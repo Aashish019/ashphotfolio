@@ -7,7 +7,7 @@ import Image from "next/image";
 
 
 export default function Home() {
-   const [showNav, setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(true);
   const heroRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -40,27 +40,26 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-const homeTitle = useScrollAnimation("animate-fadeInUp");
-const aboutTitle = useScrollAnimation("animate-fadeInLeft");
+  const homeTitle = useScrollAnimation("animate-fadeInUp");
+  const aboutTitle = useScrollAnimation("animate-fadeInLeft");
 
-const experienceSection = useScrollAnimation("animate-fadeInUp");
+  const experienceSection = useScrollAnimation("animate-fadeInUp");
 
-const projectsTitle = useScrollAnimation("animate-fadeInUp");
+  const projectsTitle = useScrollAnimation("animate-fadeInUp");
 
-const projectBlock1 = useScrollAnimation("animate-fadeInLeft");
-const projectBlock2 = useScrollAnimation("animate-fadeInRight");
-const projectBlock3 = useScrollAnimation("animate-fadeInLeft");
+  const projectBlock1 = useScrollAnimation("animate-fadeInLeft");
+  const projectBlock2 = useScrollAnimation("animate-fadeInRight");
+  const projectBlock3 = useScrollAnimation("animate-fadeInLeft");
 
-const educationTitle = useScrollAnimation("animate-fadeInUp");
-const contactTitle = useScrollAnimation("animate-fadeIn");
+  const educationTitle = useScrollAnimation("animate-fadeInUp");
+  const contactTitle = useScrollAnimation("animate-fadeIn");
 
   return (
     <main className="min-h-screen text-white ">
       <nav
-          className={`fixed top-0 w-full backdrop-blur-md z-50 transition-transform duration-300 ${
-            showNav ? "translate-y-0" : "-translate-y-full"
+        className={`fixed top-0 w-full backdrop-blur-md z-50 transition-transform duration-300 ${showNav ? "translate-y-0" : "-translate-y-full"
           }`}
-        >
+      >
         <div className="container mx-auto px-6 md:px-8">
           <div className="flex justify-between items-center h-16 text-[#8314eb] animate-fadeInDown">
             <span className="text-xl font-bold gradient-text ">
@@ -80,27 +79,27 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 CONTACT
               </a>
               <a
-  href="/Aashish_Anil_CV.pdf"
-  download
-  className="
+                href="/Aashish_Anil_CV.pdf"
+                download
+                className="
     flex items-center gap-2 
     px-4 py-1 rounded-full
     border border-white/20 backdrop-blur-sm
     text-white hover:bg-white/10 transition-all duration-300
   "
->
-  <span>Download CV</span>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="w-4 h-4"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2m-5-6l-3 3m0 0l-3-3m3 3V4" />
-  </svg>
-</a>
+              >
+                <span>Download CV</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2m-5-6l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
@@ -109,38 +108,38 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
       <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
         <div className="container mx-auto">
           <div ref={heroRef}>
-             <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
-              Cloud & DevOps
-              <br />
-              <span className="gradient-text animate-color-shift">Engineer</span>
-            </h1>
-            <div className="space-y-6 text-white">
-              <p className="text-lg md:text-xl max-w-2xl ">
-                A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
-              </p>
-              <div className="flex flex-col md:flex-row gap-4 text-sm">
-                <span>📍 Kannur, Kerala</span>
-                <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
-                  ✉️ aashishanil530@gmail.com
-                </a>
-                <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  💼 LinkedIn
-                </a>
-              </div>
-              <div className="pt-4">
-                <a
-                  href="#contact"
-                  className="inline-flex animate-neon items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
-                >
-                  Let's Connect
-                  <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
+            <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
+                Cloud & DevOps
+                <br />
+                <span className="gradient-text animate-color-shift">Engineer</span>
+              </h1>
+              <div className="space-y-6 text-white">
+                <p className="text-lg md:text-xl max-w-2xl ">
+                  A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions.
+                </p>
+                <div className="flex flex-col md:flex-row gap-4 text-sm">
+                  <span>📍 Kannur, Kerala</span>
+                  <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
+                    ✉️ aashishanil530@gmail.com
+                  </a>
+                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                    💼 LinkedIn
+                  </a>
+                </div>
+                <div className="pt-4">
+                  <a
+                    href="#contact"
+                    className="inline-flex animate-neon items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
+                  >
+                    Let&apos;s Connect
+                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </section>
@@ -236,8 +235,8 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
           <div className="max-w-4xl mx-auto space-y-8">
             {/* DevOps Developer */}
             <div className="group">
-            <div
-              className="
+              <div
+                className="
                 rounded-2xl
                 
                 p-[1px]                      /* ≈ 1px white/gradient border */
@@ -245,102 +244,102 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
                 group-hover:-translate-y-2
                 group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
               "
-            >
-              <div
-                className="
+              >
+                <div
+                  className="
                   relative rounded-[1rem]
                                  /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
                 "
-              >
-                <div className="flex items-start gap-3">
-                  {/* optional logo circle */}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* optional logo circle */}
 
-                  <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-white">
-                      DevOps Developer
-                    </h3>
-                    <p className="mt-1 text-xs text-neutral-300">
-                      McMillan Technologies And Consultancy Services PVT LTD •
-                      March 2024 - Present
-                    </p>
-                  </div>              
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white">
+                        DevOps Developer
+                      </h3>
+                      <p className="mt-1 text-xs text-neutral-300">
+                        McMillan Technologies And Consultancy Services PVT LTD •
+                        March 2024 - Present
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="group">
-            <div
-              className="
+            <div className="group">
+              <div
+                className="
                 rounded-2xl
                 p-[1px]                      /* ≈ 1px white/gradient border */
                 transition-all duration-300
                 group-hover:-translate-y-2
                 group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
               "
-            >
-              <div
-                className="
+              >
+                <div
+                  className="
                   relative rounded-[1rem]
                                  /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
                 "
-              >
-                <div className="flex items-start gap-3">
-                  {/* optional logo circle */}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* optional logo circle */}
 
-                  <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-white">
-                      Associate Web Developer
-                    </h3>
-                    <p className="mt-1 text-xs text-neutral-300">
-                      Copious Infotech • 
-                      January 2024 - February 2024 
-                    </p>
-                  </div>              
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white">
+                        Associate Web Developer
+                      </h3>
+                      <p className="mt-1 text-xs text-neutral-300">
+                        Copious Infotech •
+                        January 2024 - February 2024
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="group">
-            <div
-              className="
+            <div className="group">
+              <div
+                className="
                 rounded-2xl
                 p-[1px]                      /* ≈ 1px white/gradient border */
                 transition-all duration-300
                 group-hover:-translate-y-2
                 group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
               "
-            >
-              <div
-                className="
+              >
+                <div
+                  className="
                   relative rounded-[1rem]
                                  /* dark inner card */
                   px-6 py-5
                   flex flex-col gap-3
                   shadow-lg
                 "
-              >
-                <div className="flex items-start gap-3">
-                  {/* optional logo circle */}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* optional logo circle */}
 
-                  <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-white">
-                      Flutter Intern
-                    </h3>
-                    <p className="mt-1 text-xs text-neutral-300">
-                      Maverixpro Technology •
-                      July 2023 - January 2024
-                    </p>
-                  </div>              
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-white">
+                        Flutter Intern
+                      </h3>
+                      <p className="mt-1 text-xs text-neutral-300">
+                        Maverixpro Technology •
+                        July 2023 - January 2024
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </section>
@@ -445,7 +444,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
             <div className="grid md:grid-cols-2 gap-16">
               <div>
                 <p className="text-white text-lg leading-relaxed mb-8">
-                  Feel free to reach out for collaborations or just a friendly hello. I'm always open to discussing new projects and opportunities.
+                  Feel free to reach out for collaborations or just a friendly hello. I&apos;m always open to discussing new projects and opportunities.
                 </p>
                 <div className="space-y-4 text-sm">
                   <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
@@ -460,22 +459,22 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
               </div>
               <div>
                 <form className="space-y-6"
-                onSubmit={(e) => {
-                e.preventDefault();
+                  onSubmit={(e) => {
+                    e.preventDefault();
 
-                const form = e.target as HTMLFormElement;
-                const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-                const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+                    const form = e.target as HTMLFormElement;
+                    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+                    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+                    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
 
-                const mailToLink = `mailto:aashishanil530@gmail.com?subject=New message from ${encodeURIComponent(
-                  name
-                )}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(
-                  email
-                )}%0A%0A${encodeURIComponent(message)}`;
+                    const mailToLink = `mailto:aashishanil530@gmail.com?subject=New message from ${encodeURIComponent(
+                      name
+                    )}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(
+                      email
+                    )}%0A%0A${encodeURIComponent(message)}`;
 
-                window.location.href = mailToLink;
-              }}
+                    window.location.href = mailToLink;
+                  }}
                 >
                   <div>
                     <label htmlFor="name" className="block text-sm mb-2 text-white">Name</label>
@@ -519,7 +518,7 @@ const contactTitle = useScrollAnimation("animate-fadeIn");
           </div>
         </div>
       </section>
-      
+
       <footer className="py-8 text-center text-sm text-white">
         <div className="container mx-auto">
           <p>© 2025 Aashish Anil. All rights reserved.</p>
