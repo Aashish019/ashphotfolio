@@ -1,531 +1,430 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import AnimatedParagraph from "@/components/AnimatedParagraph";
-import TypewriterEffect from "@/components/TypewriterEffect";
-import useScrollAnimation from "@/hooks/useScrollAnimation";
-import Image from "next/image";
 
-
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
-  const [showNav, setShowNav] = useState(true);
-  const heroRef = useRef<HTMLDivElement | null>(null);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [activeSection, setActiveSection] = useState("home");
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    const navHeight = 64; // navbar ~16 * 4px
-
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      const heroTop = heroRef.current
-        ? heroRef.current.getBoundingClientRect().top
-        : Infinity;
-
-      if (currentY <= 0) {
-        // at the very top -> always show
-        setShowNav(true);
-      } else if (currentY > lastScrollY) {
-        // scrolling DOWN
-        if (heroTop <= navHeight) {
-          // hero text has reached / gone under nav
-          setShowNav(false);
-        }
-      } else {
-        // scrolling UP
-        setShowNav(true);
-      }
-
-      lastScrollY = currentY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
-  const homeTitle = useScrollAnimation("animate-fadeInUp");
-  const aboutTitle = useScrollAnimation("animate-fadeInLeft");
 
-  const experienceSection = useScrollAnimation("animate-fadeInUp");
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id || "home"); }),
+      { threshold: 0.3 }
+    );
+    document.querySelectorAll("section[id]").forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
-  const projectsTitle = useScrollAnimation("animate-fadeInUp");
+  const navLinks = ["about", "experience", "projects", "contact"];
 
-  const projectBlock1 = useScrollAnimation("animate-fadeInLeft");
-  const projectBlock2 = useScrollAnimation("animate-fadeInRight");
-  const projectBlock3 = useScrollAnimation("animate-fadeInLeft");
+  const skills = [
+    { category: "Cloud & Infra", icon: "☁", items: ["AWS (IAM, EC2, S3, VPC, RDS, ECS, ECR)", "Linode", "Terraform", "Helm"], color: "#3b82f6" },
+    { category: "CI/CD", icon: "⚡", items: ["Jenkins", "GitHub Actions", "SonarQube", "Trivy"], color: "#f59e0b" },
+    { category: "Observability", icon: "◎", items: ["Prometheus", "Grafana", "Node Exporter", "CloudWatch", "CloudTrail"], color: "#10b981" },
+    { category: "Containers", icon: "⬡", items: ["Docker", "Kubernetes", "Helm"], color: "#8b5cf6" },
+    { category: "Scripting", icon: "{ }", items: ["Python", "Bash", "MySQL", "MongoDB"], color: "#ec4899" },
+    { category: "Tools", icon: "◆", items: ["n8n", "Mailcow", "Git", "GitHub"], color: "#14b8a6" },
+  ];
 
-  const educationTitle = useScrollAnimation("animate-fadeInUp");
-  const contactTitle = useScrollAnimation("animate-fadeIn");
+  const experiences = [
+    {
+      title: "Junior DevOps Engineer",
+      company: "McMillan Technologies & Consultancy Services",
+      period: "Mar 2025 – May 2026",
+      tag: "RECENT",
+      bullets: [
+        "Designed CI/CD pipelines via Jenkins & GitHub webhooks — zero-downtime across multiple client environments",
+        "Automated deployment workflows cutting manual effort by 80%+",
+        "Migrated legacy apps to Docker — improved scalability & rollback reliability",
+        "Provisioned cloud infra on Linode with Terraform modules",
+        "Built Prometheus + Grafana + Node Exporter monitoring stack",
+        "Developed n8n + Jenkins incident response: 3-min health checks, Telegram alerts, auto-restart on 500+",
+        "Deployed & managed Mailcow mail server infrastructure",
+      ],
+    },
+    {
+      title: "WordPress Developer",
+      company: "Copious Infotech",
+      period: "Jan 2024 – Feb 2025",
+      tag: "",
+      bullets: [
+        "Designed & maintained WordPress sites for multiple clients",
+        "Managed theme customization, plugin config, and content updates",
+        "Strengthened version control & deployment workflow practices",
+      ],
+    },
+    {
+      title: "Flutter Developer Intern",
+      company: "Maverixpro Technology",
+      period: "Jul 2023 – Jan 2024",
+      tag: "",
+      bullets: [
+        "Built mobile UI components and gained hands-on experience with the full app development lifecycle",
+      ],
+    },
+  ];
+
+  const projects = [
+    {
+      num: "01", cat: "DEVOPS",
+      title: "Monitoring & Self-Healing Infrastructure",
+      desc: "Real-time observability + automated incident response. Health checks every 3 min, Telegram alerts, auto-restart on failure.",
+      impact: ["Prometheus + Grafana dashboards", "3-min health checks via n8n", "Auto-restart on HTTP 500+"],
+      tags: ["Prometheus", "Grafana", "n8n", "Jenkins"],
+      accent: "#3b82f6",
+    },
+    {
+      num: "02", cat: "DEVOPS",
+      title: "CI/CD & DevOps Automation Platform",
+      desc: "End-to-end pipeline with Jenkins & GitHub webhooks. Zero-downtime deploys across multiple client servers.",
+      impact: ["80%+ reduction in manual effort", "Zero-downtime deployments", "Docker-based pipelines"],
+      tags: ["Jenkins", "Docker", "GitHub Actions", "Webhooks"],
+      accent: "#f59e0b",
+    },
+    {
+      num: "03", cat: "CLOUD",
+      title: "Cloud Infrastructure Automation",
+      desc: "Reusable Terraform modules for VPCs, EC2, load balancers & auto-scaling on AWS and Linode.",
+      impact: ["50% faster setup time", "99.9% uptime achieved", "25% fewer config errors"],
+      tags: ["AWS", "Terraform", "Linode", "IaC"],
+      accent: "#10b981",
+    },
+    {
+      num: "04", cat: "MLOPS",
+      title: "MLOps Pipeline — GlauDec",
+      desc: "Containerized Python ML pipeline for glaucoma detection. Automated model build, test & deploy via GitHub Actions.",
+      impact: ["Dockerized ML pipeline", "CI/CD with GitHub Actions", "Versioned Docker Hub images"],
+      tags: ["Python", "Docker", "GitHub Actions"],
+      accent: "#8b5cf6",
+    },
+    {
+      num: "05", cat: "DEVSECOPS",
+      title: "DevSecOps Pipeline — BoardGame App",
+      desc: "Secure Jenkins pipeline with SonarQube quality gates and Trivy vulnerability scanning. K8s Helm deployment.",
+      impact: ["95% defect-free via SonarQube", "Trivy vulnerability scanning", "40% deployment efficiency gain"],
+      tags: ["Jenkins", "Kubernetes", "Helm", "SonarQube", "Trivy"],
+      accent: "#ec4899",
+    },
+  ];
+
+  const certs = [
+    { name: "Jenkins", org: "KodeKloud", year: "2024" },
+    { name: "Docker & Kubernetes Masterclass", org: "Udemy", year: "2024" },
+    { name: "Flutter Developer", org: "MaverixPro Ltd", year: "2024" },
+    { name: "Flutter UI Bootcamp", org: "Udemy", year: "2023" },
+  ];
+
+  const pill = (text: string, color: string) => ({
+    fontSize: 10, padding: "3px 10px", borderRadius: 100,
+    backgroundColor: `${color}15`, border: `1px solid ${color}30`, color: color,
+    fontWeight: 700, letterSpacing: "0.08em",
+  } as React.CSSProperties);
+
+  const tag = (color = "rgba(255,255,255,0.04)") => ({
+    fontSize: 11, padding: "4px 12px", borderRadius: 100,
+    backgroundColor: color, border: "1px solid rgba(255,255,255,0.08)",
+    color: "rgba(226,232,240,0.5)",
+  } as React.CSSProperties);
 
   return (
-    <main className="min-h-screen text-white ">
-      <nav
-        className={`fixed top-0 w-full backdrop-blur-md z-50 transition-transform duration-300 ${showNav ? "translate-y-0" : "-translate-y-full"
-          }`}
-      >
-        <div className="container mx-auto px-6 md:px-8">
-          <div className="flex justify-between items-center h-16 text-[#8314eb] animate-fadeInDown">
-            <span className="text-xl font-bold gradient-text ">
-              Aashish Anil
-            </span>
-            <div className="hidden md:flex space-x-8 text-sm">
-              <a href="#about" className="hover:text-white transition-colors">
-                ABOUT
+    <main style={{ minHeight: "100vh", backgroundColor: "#050508", color: "#e2e8f0", fontFamily: "'DM Sans','Inter',sans-serif", overflowX: "hidden" }}>
+
+      {/* Ambient cursor glow */}
+      <div style={{ position: "fixed", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", left: mousePos.x - 300, top: mousePos.y - 300, pointerEvents: "none", zIndex: 0, transition: "left 0.4s ease, top 0.4s ease" }} />
+
+      {/* Grid bg */}
+      <div style={{ position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none", zIndex: 0 }} />
+
+      {/* NAV */}
+      <nav style={{ position: "fixed", top: 0, width: "100%", zIndex: 50, backdropFilter: "blur(20px)", backgroundColor: "rgba(5,5,8,0.85)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 2rem", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff" }}>AA</div>
+            <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.02em" }}>Aashish Anil</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            {navLinks.map((link) => (
+              <a key={link} href={`#${link}`} style={{ padding: "6px 14px", borderRadius: 8, fontSize: 13, fontWeight: 500, color: activeSection === link ? "#a5b4fc" : "rgba(226,232,240,0.45)", backgroundColor: activeSection === link ? "rgba(99,102,241,0.12)" : "transparent", textDecoration: "none", textTransform: "capitalize", transition: "all 0.2s" }}>
+                {link}
               </a>
-              <a href="#experience" className="hover:text-white transition-colors">
-                EXPERIENCE
-              </a>
-              <a href="#projects" className="hover:text-white transition-colors">
-                PROJECTS
-              </a>
-              <a href="#contact" className="hover:text-white transition-colors">
-                CONTACT
-              </a>
-              <a
-                href="/Aashish_Anil_CV.pdf"
-                download
-                className="
-    flex items-center gap-2 
-    px-4 py-1 rounded-full
-    border border-white/20 backdrop-blur-sm
-    text-white hover:bg-white/10 transition-all duration-300
-  "
-              >
-                <span>Download CV</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2m-5-6l-3 3m0 0l-3-3m3 3V4" />
-                </svg>
-              </a>
-            </div>
+            ))}
+            <a href="/Aashish_Anil_CV.pdf" download style={{ marginLeft: 8, padding: "7px 18px", borderRadius: 8, fontSize: 13, fontWeight: 600, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", textDecoration: "none" }}>
+              Resume ↓
+            </a>
           </div>
         </div>
       </nav>
 
-      <section className="min-h-screen flex items-center justify-center section-padding px-5 ">
-        <div className="container mx-auto">
-          <div ref={heroRef}>
-            <div className="max-w-4xl mx-auto fade-in animate-on-scroll" ref={homeTitle}>
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight text-[#b49bff]">
-                Cloud & DevOps
-                <br />
-                <span className="gradient-text animate-color-shift">Engineer</span>
-              </h1>
-              <div className="space-y-6 text-white">
-                <div className="text-lg md:text-xl max-w-2xl text-white">
-                  <TypewriterEffect text="A motivated DevOps enthusiast passionate about automating infrastructure, optimizing deployments, and building scalable cloud solutions." />
-                </div>
-                <div className="flex flex-col md:flex-row gap-4 text-sm">
-                  <span>📍 Kannur, Kerala</span>
-                  <a href="mailto:aashishanil530@gmail.com" className="hover:text-white transition-colors">
-                    ✉️ aashishanil530@gmail.com
-                  </a>
-                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                    💼 LinkedIn
-                  </a>
-                </div>
-                <div className="pt-4">
-                  <a
-                    href="#contact"
-                    className="inline-flex animate-neon items-center text-[#b49bff] text-sm border border-violet-600 px-6 py-3 rounded-lg hover:bg-violet-600 hover:text-white transition-colors"
-                  >
-                    Let&apos;s Connect
-                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* ── HERO ── */}
+      <section ref={heroRef} style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: 1200, margin: "0 auto", padding: "0 2rem" }}>
+
+        {/* Available badge */}
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 16px", borderRadius: 100, border: "1px solid rgba(99,102,241,0.3)", backgroundColor: "rgba(99,102,241,0.07)", fontSize: 12, fontWeight: 500, color: "#a5b4fc", marginBottom: 36, width: "fit-content", letterSpacing: "0.05em" }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#22c55e", boxShadow: "0 0 8px #22c55e", display: "inline-block" }} />
+          OPEN TO OPPORTUNITIES
+        </div>
+
+        <h1 style={{ fontSize: "clamp(3.2rem,8vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 10, background: "linear-gradient(135deg,#e2e8f0 30%,rgba(226,232,240,0.35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          Cloud &amp;
+        </h1>
+        <h1 style={{ fontSize: "clamp(3.2rem,8vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 36, background: "linear-gradient(135deg,#6366f1,#a78bfa,#c4b5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          DevOps Engineer
+        </h1>
+
+        <p style={{ fontSize: 18, lineHeight: 1.8, color: "rgba(226,232,240,0.5)", maxWidth: 560, marginBottom: 40, letterSpacing: "-0.01em" }}>
+          Results-driven engineer reducing manual deployment effort by{" "}
+          <span style={{ color: "#a5b4fc", fontWeight: 600 }}>80%+</span> through pipeline automation
+          and containerization. Passionate about MLOps and AI-driven infrastructure.
+        </p>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 44 }}>
+          {[
+            { icon: "📍", text: "Kannur, Kerala" },
+            { icon: "✉", text: "aashishanil530@gmail.com", href: "mailto:aashishanil530@gmail.com" },
+            { icon: "↗", text: "LinkedIn", href: "https://linkedin.com/in/aashishanil" },
+          ].map((m) => {
+            const s = { display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.07)", backgroundColor: "rgba(255,255,255,0.03)", fontSize: 13, color: "rgba(226,232,240,0.55)", textDecoration: "none" } as React.CSSProperties;
+            return m.href ? <a key={m.text} href={m.href} target={m.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" style={s}><span>{m.icon}</span>{m.text}</a> : <div key={m.text} style={s}><span>{m.icon}</span>{m.text}</div>;
+          })}
+        </div>
+
+        <div style={{ display: "flex", gap: 12 }}>
+          <a href="#projects" style={{ padding: "13px 30px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>View Projects →</a>
+          <a href="#contact" style={{ padding: "13px 30px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.04)", color: "rgba(226,232,240,0.8)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>Let&apos;s Talk</a>
+        </div>
+
+        {/* Scroll hint */}
+        <div style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+          <span style={{ fontSize: 10, color: "rgba(226,232,240,0.18)", letterSpacing: "0.12em" }}>SCROLL</span>
+          <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, rgba(99,102,241,0.5), transparent)" }} />
         </div>
       </section>
 
-      <section id="about" className="section-padding py-20 px-5">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={aboutTitle}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight " >About</h2>
-            <div className="grid md:grid-cols-2 gap-16">
-              <div>
-                <div className="text-white text-lg leading-relaxed mb-8 ">
-                  <AnimatedParagraph text="A motivated Cloud and DevOps enthusiast with a passion for automation and infrastructure optimization. I specialize in designing and implementing efficient CI/CD pipelines, containerization strategies, and cloud-native solutions." />
+      {/* ── ABOUT ── */}
+      <section id="about" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
+
+          {/* Left */}
+          <div>
+            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>ABOUT ME</p>
+            <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 24, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              Building systems that scale &amp; self-heal
+            </h2>
+            <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 18 }}>
+              I&apos;m a DevOps engineer focused on eliminating toil through automation. From CI/CD pipelines
+              to self-healing infrastructure, I build systems that work even when people aren&apos;t watching.
+            </p>
+            <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 40 }}>
+              Currently exploring the intersection of MLOps and platform engineering — containerizing AI
+              pipelines and making them production-grade.
+            </p>
+
+            {/* Stats */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {[
+                { val: "80%+", label: "Manual effort reduced" },
+                { val: "5+", label: "Projects shipped" },
+                { val: "99.9%", label: "Uptime achieved" },
+                { val: "3 yrs", label: "Industry experience" },
+              ].map((s) => (
+                <div key={s.label} style={{ padding: "20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+                  <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.04em", background: "linear-gradient(135deg,#6366f1,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 4 }}>{s.val}</div>
+                  <div style={{ fontSize: 12, color: "rgba(226,232,240,0.35)" }}>{s.label}</div>
                 </div>
-                <div className="space-y-8 ">
+              ))}
+            </div>
+          </div>
+
+          {/* Right: skills */}
+          <div>
+            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 22 }}>TECHNICAL SKILLS</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {skills.map((s) => (
+                <div key={s.category} style={{ padding: "16px 18px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", display: "flex", gap: 14, alignItems: "flex-start" }}>
+                  <div style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: `${s.color}15`, border: `1px solid ${s.color}28`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: s.color, flexShrink: 0, fontFamily: "monospace" }}>{s.icon}</div>
                   <div>
-                    <h3 className="text-sm font-medium text-gray-400 mb-4">CERTIFICATIONS</h3>
-                    <ul className="space-y-4">
-                      <li className="flex items-start">
-                        <div className="flex-1">
-                          <h4 className="font-medium">Jenkins</h4>
-                          <p className="text-sm text-white">KodeKloud • September 2024</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <div className="flex-1">
-                          <h4 className="font-medium">Docker and Kubernetes Masterclass</h4>
-                          <p className="text-sm text-white">Udemy • March 2024</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <div className="flex-1">
-                          <h4 className="font-medium">Flutter Developer</h4>
-                          <p className="text-sm text-white">MaverixPro Ltd • January 2024</p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-8 ">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-400 mb-4">TECHNICAL SKILLS</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-medium mb-2">Cloud & Infrastructure</h4>
-                      <ul className="space-y-1 text-sm text-white">
-                        <li>AWS (EC2, S3, VPC)</li>
-                        <li>Terraform</li>
-                        <li>Docker</li>
-                        <li>Kubernetes</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">CI/CD & DevOps</h4>
-                      <ul className="space-y-1 text-sm text-white">
-                        <li>Jenkins</li>
-                        <li>GitHub Actions</li>
-                        <li>Git</li>
-                        <li>CloudWatch</li>
-                      </ul>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: s.color, letterSpacing: "0.08em", marginBottom: 8 }}>{s.category.toUpperCase()}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                      {s.items.map((item) => (
+                        <span key={item} style={{ fontSize: 12, padding: "3px 10px", borderRadius: 100, backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(226,232,240,0.55)" }}>{item}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-400 mb-4">PROGRAMMING</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <ul className="space-y-1 text-sm text-white">
-                        <li>Python</li>
-                        <li>Bash</li>
-                        <li>C</li>
-                        <li>Dart</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Databases</h4>
-                      <ul className="space-y-1 text-sm text-white">
-                        <li>MySQL</li>
-                        <li>MongoDB</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+
+        {/* Certifications */}
+        <div style={{ marginTop: 80 }}>
+          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 22 }}>CERTIFICATIONS</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14 }}>
+            {certs.map((c) => (
+              <div key={c.name} style={{ padding: "20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,rgba(99,102,241,0.18),rgba(139,92,246,0.18))", border: "1px solid rgba(99,102,241,0.22)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, marginBottom: 12 }}>✦</div>
+                <p style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", marginBottom: 4, lineHeight: 1.4 }}>{c.name}</p>
+                <p style={{ fontSize: 11, color: "rgba(226,232,240,0.3)" }}>{c.org} · {c.year}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="experience" className="py-20 px-5">
-        <div className="container mx-auto px-4 animate-on-scroll" ref={experienceSection} >
-          <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* DevOps Developer */}
-            <div className="group">
-              <div
-                className="
-                rounded-2xl
-                
-                p-[1px]                      /* ≈ 1px white/gradient border */
-                transition-all duration-300
-                group-hover:-translate-y-2
-                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
-              "
-              >
-                <div
-                  className="
-                  relative rounded-[1rem]
-                                 /* dark inner card */
-                  px-6 py-5
-                  flex flex-col gap-3
-                  shadow-lg
-                "
-                >
-                  <div className="flex items-start gap-3">
-                    {/* optional logo circle */}
+      {/* ── EXPERIENCE ── */}
+      <section id="experience" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>EXPERIENCE</p>
+        <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 60, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          Where I&apos;ve worked
+        </h2>
 
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white">
-                        DevOps Developer
-                      </h3>
-                      <p className="mt-1 text-xs text-neutral-300">
-                        McMillan Technologies And Consultancy Services PVT LTD •
-                        March 2024 - Present
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="group">
-              <div
-                className="
-                rounded-2xl
-                p-[1px]                      /* ≈ 1px white/gradient border */
-                transition-all duration-300
-                group-hover:-translate-y-2
-                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
-              "
-              >
-                <div
-                  className="
-                  relative rounded-[1rem]
-                                 /* dark inner card */
-                  px-6 py-5
-                  flex flex-col gap-3
-                  shadow-lg
-                "
-                >
-                  <div className="flex items-start gap-3">
-                    {/* optional logo circle */}
-
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white">
-                        Associate Web Developer
-                      </h3>
-                      <p className="mt-1 text-xs text-neutral-300">
-                        Copious Infotech •
-                        January 2024 - February 2024
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="group">
-              <div
-                className="
-                rounded-2xl
-                p-[1px]                      /* ≈ 1px white/gradient border */
-                transition-all duration-300
-                group-hover:-translate-y-2
-                group-hover:shadow-[0_18px_60px_rgba(0,0,0,0.7)]
-              "
-              >
-                <div
-                  className="
-                  relative rounded-[1rem]
-                                 /* dark inner card */
-                  px-6 py-5
-                  flex flex-col gap-3
-                  shadow-lg
-                "
-                >
-                  <div className="flex items-start gap-3">
-                    {/* optional logo circle */}
-
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-white">
-                        Flutter Intern
-                      </h3>
-                      <p className="mt-1 text-xs text-neutral-300">
-                        Maverixpro Technology •
-                        July 2023 - January 2024
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" className="section-padding py-20 px-5">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in ">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight animate-on-scroll" ref={projectsTitle}>Projects</h2>
-            <div className="space-y-24">
-              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock1}>
-                <div>
-                  <span className="text-sm text-gray-400 mb-4 block">01 / DEVOPS</span>
-                  <h3 className="text-2xl font-bold mb-4">BoardGame Pipeline</h3>
-                  <div className="text-white mb-6 leading-relaxed">
-                    <TypewriterEffect text="Comprehensive CI/CD pipeline implementation for Java Maven application with security scanning and Kubernetes deployment." />
-                  </div>
-                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
-                    <li>→ Reduced deployment time by 30%</li>
-                    <li>→ Achieved 95% defect-free code with SonarQube</li>
-                    <li>→ Decreased manual configuration by 40%</li>
-                  </ul>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Jenkins</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Kubernetes</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
-                  </div>
-                </div>
-                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
-                  <Image className="rounded-lg object-contain" src="/Bgame.png" alt="BoardGame Pipeline" width={500} height={500} />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock2}>
-                <div className="md:order-2">
-                  <span className="text-sm text-gray-400 mb-4 block">02 / CLOUD</span>
-                  <h3 className="text-2xl font-bold mb-4">AWS Infrastructure Automation</h3>
-                  <div className="text-white mb-6 leading-relaxed">
-                    <TypewriterEffect text="Automated AWS infrastructure provisioning using Terraform modules for efficient and consistent deployment." />
-                  </div>
-                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
-                    <li>→ Reduced setup time by 50%</li>
-                    <li>→ Achieved 99.9% uptime</li>
-                    <li>→ 25% reduction in deployment errors</li>
-                  </ul>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">AWS</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">Terraform</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white  text-sm">IaC</span>
-                  </div>
-                </div>
-                <div className="bg-invisible rounded-lg aspect-video w-full md:order-1 flex items-center justify-center overflow-hidden">
-                  <Image className="rounded-lg object-contain" src="/awsInfra.jpg" alt="AWS Infrastructure Automation" width={500} height={500} />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-12 items-start animate-on-scroll" ref={projectBlock3}>
-                <div>
-                  <span className="text-sm text-gray-400 mb-4 block">03 / ML</span>
-                  <h3 className="text-2xl font-bold mb-4">GlauDec</h3>
-                  <div className="text-white mb-6 leading-relaxed">
-                    <TypewriterEffect text="Python-based glaucoma detection system using fundus image analysis with containerized deployment." />
-                  </div>
-                  <ul className="space-y-2 text-sm text-violet-600 mb-6">
-                    <li>→ Containerized with Docker</li>
-                    <li>→ Automated CI/CD with GitHub Actions</li>
-                    <li>→ Published to Docker Hub</li>
-                  </ul>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Python</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">Docker</span>
-                    <span className="px-3 py-1 border rounded-lg border-violet-200 text-white text-sm">GitHub Actions</span>
-                  </div>
-                </div>
-                <div className="bg-invisible rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
-                  <Image className="rounded-lg object-contain" src="/glauDec.jpg" alt="glauDec" width={500} height={500} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="education" className="section-padding py-10 px-5">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={educationTitle}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Education</h2>
-            <div className="max-w-3xl">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold">Bachelor of Technology</h3>
-                <p className="text-white">Computer Science</p>
-                <p className="text-sm text-white">St. Thomas College of Engineering and Technology • 2019 - 2023</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="section-padding px-5">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto fade-in animate-on-scroll" ref={contactTitle}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Contact</h2>
-            <div className="grid md:grid-cols-2 gap-16">
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {experiences.map((exp) => (
+            <div key={exp.title} style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 40, padding: "36px 0", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
               <div>
-                <div className="text-white text-lg leading-relaxed mb-8">
-                  <TypewriterEffect text="Feel free to reach out for collaborations or just a friendly hello. I&apos;m always open to discussing new projects and opportunities." />
-                </div>
-                <div className="space-y-4 text-sm">
-                  <a href="mailto:aashishanil530@gmail.com" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
-                    <span className="w-6">📧</span>
-                    <span>aashishanil530@gmail.com</span>
-                  </a>
-                  <a href="https://linkedin.com/in/aashishanil" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 hover:text-violet-500 transition-colors">
-                    <span className="w-6">💼</span>
-                    <span>linkedin.com/in/aashishanil</span>
-                  </a>
-                </div>
+                <p style={{ fontSize: 12, color: "rgba(226,232,240,0.3)", letterSpacing: "0.02em", marginBottom: 10 }}>{exp.period}</p>
+                {exp.tag && <span style={pill(exp.tag, "#22c55e")}>{exp.tag}</span>}
               </div>
               <div>
-                <form className="space-y-6"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-
-                    const form = e.target as HTMLFormElement;
-                    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-                    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-                    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
-
-                    const mailToLink = `mailto:aashishanil530@gmail.com?subject=New message from ${encodeURIComponent(
-                      name
-                    )}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(
-                      email
-                    )}%0A%0A${encodeURIComponent(message)}`;
-
-                    window.location.href = mailToLink;
-                  }}
-                >
-                  <div>
-                    <label htmlFor="name" className="block text-sm mb-2 text-white">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm mb-2 text-white">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm mb-2 text-white">Message</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      className="w-full px-4 py-2 border border-violet-600 focus:outline-none focus:border-violet-600 transition-colors"
-                      required
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full border border-violet-600 px-6 py-3 hover:bg-violet-600 hover:text-white transition-colors text-sm"
-                  >
-                    Send Message
-                  </button>
-                </form>
+                <h3 style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>{exp.title}</h3>
+                <p style={{ fontSize: 14, color: "rgba(226,232,240,0.38)", marginBottom: 20 }}>{exp.company}</p>
+                <ul style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {exp.bullets.map((b, i) => (
+                    <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14, color: "rgba(226,232,240,0.58)", lineHeight: 1.65 }}>
+                      <span style={{ color: "#6366f1", marginTop: 4, flexShrink: 0 }}>▸</span>{b}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
+          ))}
+        </div>
+
+        {/* Education */}
+        <div style={{ marginTop: 60, padding: "36px", borderRadius: 16, border: "1px solid rgba(99,102,241,0.14)", backgroundColor: "rgba(99,102,241,0.04)", display: "grid", gridTemplateColumns: "220px 1fr", gap: 40 }}>
+          <p style={{ fontSize: 12, color: "rgba(226,232,240,0.3)" }}>2019 – 2023</p>
+          <div>
+            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.12em", fontWeight: 700, marginBottom: 10 }}>EDUCATION</p>
+            <h3 style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>B.Tech in Computer Science</h3>
+            <p style={{ fontSize: 14, color: "rgba(226,232,240,0.38)" }}>St. Thomas College of Engineering and Technology</p>
           </div>
         </div>
       </section>
 
-      <footer className="py-8 text-center text-sm text-white">
-        <div className="container mx-auto">
-          <p>© 2025 Aashish Anil. All rights reserved.</p>
+      {/* ── PROJECTS ── */}
+      <section id="projects" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>PROJECTS</p>
+        <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 60, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          Things I&apos;ve built
+        </h2>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {/* Featured */}
+          <div style={{ padding: "40px", borderRadius: 16, border: "1px solid rgba(59,130,246,0.14)", backgroundColor: "rgba(59,130,246,0.04)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle,rgba(59,130,246,0.07),transparent 70%)", pointerEvents: "none" }} />
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                <span style={{ fontSize: 11, color: "rgba(226,232,240,0.25)", fontFamily: "monospace" }}>01</span>
+                <span style={pill("DEVOPS", "#3b82f6")}>DEVOPS</span>
+              </div>
+              <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 12, lineHeight: 1.3 }}>{projects[0].title}</h3>
+              <p style={{ fontSize: 14, color: "rgba(226,232,240,0.48)", lineHeight: 1.75, marginBottom: 24 }}>{projects[0].desc}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+                {projects[0].tags.map((t) => <span key={t} style={tag()}>{t}</span>)}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {projects[0].impact.map((imp) => (
+                <div key={imp} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", borderRadius: 10, backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
+                  <span style={{ color: "#3b82f6" }}>✓</span>
+                  <span style={{ fontSize: 13, color: "rgba(226,232,240,0.65)" }}>{imp}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            {projects.slice(1).map((p) => (
+              <div key={p.num} style={{ padding: "28px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: -40, right: -40, width: 120, height: 120, borderRadius: "50%", background: `radial-gradient(circle,${p.accent}0a,transparent 70%)`, pointerEvents: "none" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                  <span style={{ fontSize: 11, color: "rgba(226,232,240,0.2)", fontFamily: "monospace" }}>{p.num}</span>
+                  <span style={pill(p.cat, p.accent)}>{p.cat}</span>
+                </div>
+                <h3 style={{ fontSize: 17, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 10, lineHeight: 1.3 }}>{p.title}</h3>
+                <p style={{ fontSize: 13, color: "rgba(226,232,240,0.44)", lineHeight: 1.75, marginBottom: 16 }}>{p.desc}</p>
+                <ul style={{ marginBottom: 18, display: "flex", flexDirection: "column", gap: 6 }}>
+                  {p.impact.map((imp) => (
+                    <li key={imp} style={{ display: "flex", gap: 8, fontSize: 12, color: "rgba(226,232,240,0.48)", alignItems: "flex-start" }}>
+                      <span style={{ color: p.accent, flexShrink: 0, marginTop: 2 }}>▸</span>{imp}
+                    </li>
+                  ))}
+                </ul>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {p.tags.map((t) => <span key={t} style={tag()}>{t}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* ── CONTACT ── */}
+      <section id="contact" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div style={{ maxWidth: 620 }}>
+          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>CONTACT</p>
+          <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            Let&apos;s build something together
+          </h2>
+          <p style={{ fontSize: 16, color: "rgba(226,232,240,0.42)", lineHeight: 1.8, marginBottom: 40 }}>
+            Open to new opportunities, collaborations, and interesting problems. Drop me a message — I&apos;ll get back to you.
+          </p>
+
+          <div style={{ display: "flex", gap: 10, marginBottom: 40 }}>
+            {[
+              { icon: "✉", text: "aashishanil530@gmail.com", href: "mailto:aashishanil530@gmail.com" },
+              { icon: "↗", text: "LinkedIn", href: "https://linkedin.com/in/aashishanil" },
+            ].map((l) => (
+              <a key={l.text} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: 7, padding: "10px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", fontSize: 13, color: "rgba(226,232,240,0.55)", textDecoration: "none" }}>
+                <span>{l.icon}</span>{l.text}
+              </a>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[{ key: "name", placeholder: "Your name", type: "text" }, { key: "email", placeholder: "Your email", type: "email" }].map((f) => (
+              <input key={f.key} type={f.type} placeholder={f.placeholder}
+                value={formData[f.key as keyof typeof formData]}
+                onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
+                style={{ width: "100%", padding: "14px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 14, outline: "none", boxSizing: "border-box" }}
+              />
+            ))}
+            <textarea placeholder="Your message" rows={5} value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              style={{ width: "100%", padding: "14px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 14, outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+            />
+            <button onClick={() => console.log("Form:", formData)}
+              style={{ padding: "14px 32px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", width: "fit-content" }}>
+              Send Message →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.04)", padding: "32px 2rem", textAlign: "center", fontSize: 13, color: "rgba(226,232,240,0.18)" }}>
+        © 2026 Aashish Anil · Built with Next.js
       </footer>
     </main>
   );
 }
-
