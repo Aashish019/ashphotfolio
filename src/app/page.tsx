@@ -2,10 +2,23 @@
 
 import { useState, useEffect, useRef } from "react";
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [activeSection, setActiveSection] = useState("home");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -17,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id || "home"); }),
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
     document.querySelectorAll("section[id]").forEach((s) => observer.observe(s));
     return () => observer.disconnect();
@@ -122,183 +135,198 @@ export default function Home() {
     { name: "Flutter UI Bootcamp", org: "Udemy", year: "2023" },
   ];
 
-  const pill = (text: string, color: string) => ({
+  const pill = (text: string, color: string): React.CSSProperties => ({
     fontSize: 10, padding: "3px 10px", borderRadius: 100,
-    backgroundColor: `${color}15`, border: `1px solid ${color}30`, color: color,
+    backgroundColor: `${color}15`, border: `1px solid ${color}30`, color,
     fontWeight: 700, letterSpacing: "0.08em",
-  } as React.CSSProperties);
+  });
 
-  const tag = (color = "rgba(255,255,255,0.04)") => ({
+  const tagStyle = (): React.CSSProperties => ({
     fontSize: 11, padding: "4px 12px", borderRadius: 100,
-    backgroundColor: color, border: "1px solid rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
     color: "rgba(226,232,240,0.5)",
-  } as React.CSSProperties);
+  });
+
+  const sectionPad = isMobile ? "80px 1.25rem" : "120px 2rem";
+  const headingSize = isMobile ? 30 : 40;
 
   return (
     <main style={{ minHeight: "100vh", backgroundColor: "#050508", color: "#e2e8f0", fontFamily: "'DM Sans','Inter',sans-serif", overflowX: "hidden" }}>
 
-      {/* Ambient cursor glow */}
-      <div style={{ position: "fixed", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", left: mousePos.x - 300, top: mousePos.y - 300, pointerEvents: "none", zIndex: 0, transition: "left 0.4s ease, top 0.4s ease" }} />
+      {/* Ambient cursor glow — desktop only */}
+      {!isMobile && (
+        <div style={{ position: "fixed", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)", left: mousePos.x - 300, top: mousePos.y - 300, pointerEvents: "none", zIndex: 0, transition: "left 0.4s ease, top 0.4s ease" }} />
+      )}
 
       {/* Grid bg */}
       <div style={{ position: "fixed", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none", zIndex: 0 }} />
 
-      {/* NAV */}
-      <nav style={{ position: "fixed", top: 0, width: "100%", zIndex: 50, backdropFilter: "blur(20px)", backgroundColor: "rgba(5,5,8,0.85)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 2rem", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      {/* ── NAV ── */}
+      <nav style={{ position: "fixed", top: 0, width: "100%", zIndex: 50, backdropFilter: "blur(20px)", backgroundColor: "rgba(5,5,8,0.9)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 1.25rem", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff" }}>AA</div>
-            <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.02em" }}>Aashish Anil</span>
+            <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "#fff", flexShrink: 0 }}>AA</div>
+            <span style={{ fontWeight: 600, fontSize: 14, letterSpacing: "-0.02em" }}>Aashish Anil</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+
+          {/* Desktop links */}
+          {!isMobile && (
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              {navLinks.map((link) => (
+                <a key={link} href={`#${link}`} style={{ padding: "6px 14px", borderRadius: 8, fontSize: 13, fontWeight: 500, color: activeSection === link ? "#a5b4fc" : "rgba(226,232,240,0.45)", backgroundColor: activeSection === link ? "rgba(99,102,241,0.12)" : "transparent", textDecoration: "none", textTransform: "capitalize", transition: "all 0.2s" }}>
+                  {link}
+                </a>
+              ))}
+              <a href="/Aashish_Anil_CV.pdf" download style={{ marginLeft: 8, padding: "7px 18px", borderRadius: 8, fontSize: 13, fontWeight: 600, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", textDecoration: "none" }}>
+                Resume ↓
+              </a>
+            </div>
+          )}
+
+          {/* Mobile hamburger */}
+          {isMobile && (
+            <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 10px", color: "rgba(226,232,240,0.7)", cursor: "pointer", fontSize: 18, lineHeight: 1 }}>
+              {menuOpen ? "✕" : "☰"}
+            </button>
+          )}
+        </div>
+
+        {/* Mobile menu */}
+        {isMobile && menuOpen && (
+          <div style={{ backgroundColor: "rgba(5,5,8,0.98)", borderTop: "1px solid rgba(255,255,255,0.05)", padding: "1rem 1.25rem", display: "flex", flexDirection: "column", gap: 4 }}>
             {navLinks.map((link) => (
-              <a key={link} href={`#${link}`} style={{ padding: "6px 14px", borderRadius: 8, fontSize: 13, fontWeight: 500, color: activeSection === link ? "#a5b4fc" : "rgba(226,232,240,0.45)", backgroundColor: activeSection === link ? "rgba(99,102,241,0.12)" : "transparent", textDecoration: "none", textTransform: "capitalize", transition: "all 0.2s" }}>
+              <a key={link} href={`#${link}`} onClick={() => setMenuOpen(false)} style={{ padding: "10px 14px", borderRadius: 8, fontSize: 15, fontWeight: 500, color: activeSection === link ? "#a5b4fc" : "rgba(226,232,240,0.6)", backgroundColor: activeSection === link ? "rgba(99,102,241,0.12)" : "transparent", textDecoration: "none", textTransform: "capitalize" }}>
                 {link}
               </a>
             ))}
-            <a href="/Aashish_Anil_CV.pdf" download style={{ marginLeft: 8, padding: "7px 18px", borderRadius: 8, fontSize: 13, fontWeight: 600, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", textDecoration: "none" }}>
-              Resume ↓
+            <a href="/Aashish_Anil_CV.pdf" download style={{ marginTop: 8, padding: "11px 14px", borderRadius: 8, fontSize: 14, fontWeight: 600, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", textDecoration: "none", textAlign: "center" }}>
+              Download Resume ↓
             </a>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* ── HERO ── */}
-      <section ref={heroRef} style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: 1200, margin: "0 auto", padding: "0 2rem" }}>
-
-        {/* Available badge */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 16px", borderRadius: 100, border: "1px solid rgba(99,102,241,0.3)", backgroundColor: "rgba(99,102,241,0.07)", fontSize: 12, fontWeight: 500, color: "#a5b4fc", marginBottom: 36, width: "fit-content", letterSpacing: "0.05em" }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#22c55e", boxShadow: "0 0 8px #22c55e", display: "inline-block" }} />
+      <section ref={heroRef} style={{ position: "relative", zIndex: 1, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 16px", borderRadius: 100, border: "1px solid rgba(99,102,241,0.3)", backgroundColor: "rgba(99,102,241,0.07)", fontSize: 11, fontWeight: 500, color: "#a5b4fc", marginBottom: isMobile ? 28 : 36, width: "fit-content", letterSpacing: "0.05em" }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#22c55e", boxShadow: "0 0 8px #22c55e", display: "inline-block", flexShrink: 0 }} />
           OPEN TO OPPORTUNITIES
         </div>
 
-        <h1 style={{ fontSize: "clamp(3.2rem,8vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 10, background: "linear-gradient(135deg,#e2e8f0 30%,rgba(226,232,240,0.35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <h1 style={{ fontSize: "clamp(2.8rem,10vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 8, background: "linear-gradient(135deg,#e2e8f0 30%,rgba(226,232,240,0.35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           Cloud &amp;
         </h1>
-        <h1 style={{ fontSize: "clamp(3.2rem,8vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 36, background: "linear-gradient(135deg,#6366f1,#a78bfa,#c4b5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <h1 style={{ fontSize: "clamp(2.8rem,10vw,6.5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: isMobile ? 24 : 36, background: "linear-gradient(135deg,#6366f1,#a78bfa,#c4b5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           DevOps Engineer
         </h1>
 
-        <p style={{ fontSize: 18, lineHeight: 1.8, color: "rgba(226,232,240,0.5)", maxWidth: 560, marginBottom: 40, letterSpacing: "-0.01em" }}>
+        <p style={{ fontSize: isMobile ? 15 : 18, lineHeight: 1.8, color: "rgba(226,232,240,0.5)", maxWidth: 560, marginBottom: isMobile ? 28 : 40 }}>
           Results-driven engineer reducing manual deployment effort by{" "}
-          <span style={{ color: "#a5b4fc", fontWeight: 600 }}>80%+</span> through pipeline automation
-          and containerization. Passionate about MLOps and AI-driven infrastructure.
+          <span style={{ color: "#a5b4fc", fontWeight: 600 }}>80%+</span> through pipeline automation and containerization. Passionate about MLOps and AI-driven infrastructure.
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 44 }}>
+        <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", flexWrap: "wrap", gap: 8, marginBottom: isMobile ? 32 : 44 }}>
           {[
             { icon: "📍", text: "Kannur, Kerala" },
             { icon: "✉", text: "aashishanil530@gmail.com", href: "mailto:aashishanil530@gmail.com" },
             { icon: "↗", text: "LinkedIn", href: "https://linkedin.com/in/aashishanil" },
           ].map((m) => {
-            const s = { display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.07)", backgroundColor: "rgba(255,255,255,0.03)", fontSize: 13, color: "rgba(226,232,240,0.55)", textDecoration: "none" } as React.CSSProperties;
-            return m.href ? <a key={m.text} href={m.href} target={m.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" style={s}><span>{m.icon}</span>{m.text}</a> : <div key={m.text} style={s}><span>{m.icon}</span>{m.text}</div>;
+            const s: React.CSSProperties = { display: "flex", alignItems: "center", gap: 6, padding: "9px 16px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.07)", backgroundColor: "rgba(255,255,255,0.03)", fontSize: 13, color: "rgba(226,232,240,0.55)", textDecoration: "none" };
+            return m.href
+              ? <a key={m.text} href={m.href} target={m.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" style={s}><span>{m.icon}</span>{m.text}</a>
+              : <div key={m.text} style={s}><span>{m.icon}</span>{m.text}</div>;
           })}
         </div>
 
-        <div style={{ display: "flex", gap: 12 }}>
-          <a href="#projects" style={{ padding: "13px 30px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>View Projects →</a>
-          <a href="#contact" style={{ padding: "13px 30px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.04)", color: "rgba(226,232,240,0.8)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>Let&apos;s Talk</a>
-        </div>
-
-        {/* Scroll hint */}
-        <div style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-          <span style={{ fontSize: 10, color: "rgba(226,232,240,0.18)", letterSpacing: "0.12em" }}>SCROLL</span>
-          <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, rgba(99,102,241,0.5), transparent)" }} />
+        <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 10 }}>
+          <a href="#projects" style={{ padding: "13px 28px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 600, fontSize: 14, textDecoration: "none", textAlign: "center" }}>View Projects →</a>
+          <a href="#contact" style={{ padding: "13px 28px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.04)", color: "rgba(226,232,240,0.8)", fontWeight: 600, fontSize: 14, textDecoration: "none", textAlign: "center" }}>Let&apos;s Talk</a>
         </div>
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
+      <section id="about" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: sectionPad, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
 
-          {/* Left */}
-          <div>
-            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>ABOUT ME</p>
-            <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 24, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Building systems that scale &amp; self-heal
-            </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 18 }}>
-              I&apos;m a DevOps engineer focused on eliminating toil through automation. From CI/CD pipelines
-              to self-healing infrastructure, I build systems that work even when people aren&apos;t watching.
-            </p>
-            <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 40 }}>
-              Currently exploring the intersection of MLOps and platform engineering — containerizing AI
-              pipelines and making them production-grade.
-            </p>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 16 }}>ABOUT ME</p>
+        <h2 style={{ fontSize: headingSize, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: 20, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          Building systems that scale &amp; self-heal
+        </h2>
+        <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 14, maxWidth: 680 }}>
+          I&apos;m a DevOps engineer focused on eliminating toil through automation. From CI/CD pipelines to self-healing infrastructure, I build systems that work even when people aren&apos;t watching.
+        </p>
+        <p style={{ fontSize: 15, lineHeight: 1.85, color: "rgba(226,232,240,0.48)", marginBottom: 36, maxWidth: 680 }}>
+          Currently exploring the intersection of MLOps and platform engineering — containerizing AI pipelines and making them production-grade.
+        </p>
 
-            {/* Stats */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-              {[
-                { val: "80%+", label: "Manual effort reduced" },
-                { val: "5+", label: "Projects shipped" },
-                { val: "99.9%", label: "Uptime achieved" },
-                { val: "3 yrs", label: "Industry experience" },
-              ].map((s) => (
-                <div key={s.label} style={{ padding: "20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
-                  <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.04em", background: "linear-gradient(135deg,#6366f1,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 4 }}>{s.val}</div>
-                  <div style={{ fontSize: 12, color: "rgba(226,232,240,0.35)" }}>{s.label}</div>
-                </div>
-              ))}
+        {/* Stats */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 12, marginBottom: 56 }}>
+          {[
+            { val: "80%+", label: "Manual effort reduced" },
+            { val: "5+", label: "Projects shipped" },
+            { val: "99.9%", label: "Uptime achieved" },
+            { val: "3 yrs", label: "Industry experience" },
+          ].map((s) => (
+            <div key={s.label} style={{ padding: "18px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+              <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.04em", background: "linear-gradient(135deg,#6366f1,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: 4 }}>{s.val}</div>
+              <div style={{ fontSize: 11, color: "rgba(226,232,240,0.35)" }}>{s.label}</div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Right: skills */}
-          <div>
-            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 22 }}>TECHNICAL SKILLS</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {skills.map((s) => (
-                <div key={s.category} style={{ padding: "16px 18px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", display: "flex", gap: 14, alignItems: "flex-start" }}>
-                  <div style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: `${s.color}15`, border: `1px solid ${s.color}28`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: s.color, flexShrink: 0, fontFamily: "monospace" }}>{s.icon}</div>
-                  <div>
-                    <p style={{ fontSize: 11, fontWeight: 700, color: s.color, letterSpacing: "0.08em", marginBottom: 8 }}>{s.category.toUpperCase()}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                      {s.items.map((item) => (
-                        <span key={item} style={{ fontSize: 12, padding: "3px 10px", borderRadius: 100, backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(226,232,240,0.55)" }}>{item}</span>
-                      ))}
-                    </div>
-                  </div>
+        {/* Skills — 2 col on desktop, 1 col on mobile */}
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>TECHNICAL SKILLS</p>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 56 }}>
+          {skills.map((s) => (
+            <div key={s.category} style={{ padding: "16px 18px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", display: "flex", gap: 14, alignItems: "flex-start" }}>
+              <div style={{ width: 34, height: 34, borderRadius: 8, backgroundColor: `${s.color}15`, border: `1px solid ${s.color}28`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: s.color, flexShrink: 0, fontFamily: "monospace" }}>{s.icon}</div>
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, color: s.color, letterSpacing: "0.08em", marginBottom: 8 }}>{s.category.toUpperCase()}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {s.items.map((item) => (
+                    <span key={item} style={{ fontSize: 12, padding: "3px 10px", borderRadius: 100, backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(226,232,240,0.55)" }}>{item}</span>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Certifications */}
-        <div style={{ marginTop: 80 }}>
-          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 22 }}>CERTIFICATIONS</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14 }}>
-            {certs.map((c) => (
-              <div key={c.name} style={{ padding: "20px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg,rgba(99,102,241,0.18),rgba(139,92,246,0.18))", border: "1px solid rgba(99,102,241,0.22)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, marginBottom: 12 }}>✦</div>
-                <p style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", marginBottom: 4, lineHeight: 1.4 }}>{c.name}</p>
-                <p style={{ fontSize: 11, color: "rgba(226,232,240,0.3)" }}>{c.org} · {c.year}</p>
-              </div>
-            ))}
-          </div>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>CERTIFICATIONS</p>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 12 }}>
+          {certs.map((c) => (
+            <div key={c.name} style={{ padding: "18px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)" }}>
+              <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg,rgba(99,102,241,0.18),rgba(139,92,246,0.18))", border: "1px solid rgba(99,102,241,0.22)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, marginBottom: 10 }}>✦</div>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", marginBottom: 4, lineHeight: 1.4 }}>{c.name}</p>
+              <p style={{ fontSize: 11, color: "rgba(226,232,240,0.3)" }}>{c.org} · {c.year}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ── EXPERIENCE ── */}
-      <section id="experience" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>EXPERIENCE</p>
-        <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 60, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+      <section id="experience" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: sectionPad, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 16 }}>EXPERIENCE</p>
+        <h2 style={{ fontSize: headingSize, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: isMobile ? 40 : 60, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           Where I&apos;ve worked
         </h2>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           {experiences.map((exp) => (
-            <div key={exp.title} style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 40, padding: "36px 0", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-              <div>
-                <p style={{ fontSize: 12, color: "rgba(226,232,240,0.3)", letterSpacing: "0.02em", marginBottom: 10 }}>{exp.period}</p>
+            <div key={exp.title} style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 12 : 40, padding: "32px 0", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+              {/* Meta */}
+              <div style={{ flexShrink: 0, width: isMobile ? "auto" : 220 }}>
+                <p style={{ fontSize: 12, color: "rgba(226,232,240,0.3)", marginBottom: 8 }}>{exp.period}</p>
                 {exp.tag && <span style={pill(exp.tag, "#22c55e")}>{exp.tag}</span>}
               </div>
-              <div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>{exp.title}</h3>
-                <p style={{ fontSize: 14, color: "rgba(226,232,240,0.38)", marginBottom: 20 }}>{exp.company}</p>
+              {/* Content */}
+              <div style={{ flex: 1 }}>
+                <h3 style={{ fontSize: isMobile ? 17 : 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>{exp.title}</h3>
+                <p style={{ fontSize: 13, color: "rgba(226,232,240,0.38)", marginBottom: 16 }}>{exp.company}</p>
                 <ul style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {exp.bullets.map((b, i) => (
-                    <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14, color: "rgba(226,232,240,0.58)", lineHeight: 1.65 }}>
+                    <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: "rgba(226,232,240,0.58)", lineHeight: 1.65 }}>
                       <span style={{ color: "#6366f1", marginTop: 4, flexShrink: 0 }}>▸</span>{b}
                     </li>
                   ))}
@@ -309,60 +337,58 @@ export default function Home() {
         </div>
 
         {/* Education */}
-        <div style={{ marginTop: 60, padding: "36px", borderRadius: 16, border: "1px solid rgba(99,102,241,0.14)", backgroundColor: "rgba(99,102,241,0.04)", display: "grid", gridTemplateColumns: "220px 1fr", gap: 40 }}>
-          <p style={{ fontSize: 12, color: "rgba(226,232,240,0.3)" }}>2019 – 2023</p>
-          <div>
-            <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.12em", fontWeight: 700, marginBottom: 10 }}>EDUCATION</p>
-            <h3 style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>B.Tech in Computer Science</h3>
-            <p style={{ fontSize: 14, color: "rgba(226,232,240,0.38)" }}>St. Thomas College of Engineering and Technology</p>
-          </div>
+        <div style={{ marginTop: 48, padding: isMobile ? "24px" : "36px", borderRadius: 16, border: "1px solid rgba(99,102,241,0.14)", backgroundColor: "rgba(99,102,241,0.04)" }}>
+          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.12em", fontWeight: 700, marginBottom: 10 }}>EDUCATION</p>
+          <h3 style={{ fontSize: isMobile ? 16 : 20, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 4 }}>B.Tech in Computer Science</h3>
+          <p style={{ fontSize: 13, color: "rgba(226,232,240,0.38)", marginBottom: 6 }}>St. Thomas College of Engineering and Technology</p>
+          <p style={{ fontSize: 12, color: "rgba(226,232,240,0.28)" }}>2019 – 2023</p>
         </div>
       </section>
 
       {/* ── PROJECTS ── */}
-      <section id="projects" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>PROJECTS</p>
-        <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 60, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+      <section id="projects" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: sectionPad, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 16 }}>PROJECTS</p>
+        <h2 style={{ fontSize: headingSize, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: isMobile ? 36 : 56, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           Things I&apos;ve built
         </h2>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* Featured */}
-          <div style={{ padding: "40px", borderRadius: 16, border: "1px solid rgba(59,130,246,0.14)", backgroundColor: "rgba(59,130,246,0.04)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle,rgba(59,130,246,0.07),transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* Featured — stacks on mobile */}
+          <div style={{ padding: isMobile ? "24px" : "40px", borderRadius: 16, border: "1px solid rgba(59,130,246,0.14)", backgroundColor: "rgba(59,130,246,0.04)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 40, position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: -60, right: -60, width: 180, height: 180, borderRadius: "50%", background: "radial-gradient(circle,rgba(59,130,246,0.07),transparent 70%)", pointerEvents: "none" }} />
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <span style={{ fontSize: 11, color: "rgba(226,232,240,0.25)", fontFamily: "monospace" }}>01</span>
                 <span style={pill("DEVOPS", "#3b82f6")}>DEVOPS</span>
               </div>
-              <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 12, lineHeight: 1.3 }}>{projects[0].title}</h3>
-              <p style={{ fontSize: 14, color: "rgba(226,232,240,0.48)", lineHeight: 1.75, marginBottom: 24 }}>{projects[0].desc}</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                {projects[0].tags.map((t) => <span key={t} style={tag()}>{t}</span>)}
+              <h3 style={{ fontSize: isMobile ? 18 : 22, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 10, lineHeight: 1.3 }}>{projects[0].title}</h3>
+              <p style={{ fontSize: 14, color: "rgba(226,232,240,0.48)", lineHeight: 1.75, marginBottom: 20 }}>{projects[0].desc}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {projects[0].tags.map((t) => <span key={t} style={tagStyle()}>{t}</span>)}
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {projects[0].impact.map((imp) => (
-                <div key={imp} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", borderRadius: 10, backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
-                  <span style={{ color: "#3b82f6" }}>✓</span>
+                <div key={imp} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 10, backgroundColor: "rgba(59,130,246,0.06)", border: "1px solid rgba(59,130,246,0.12)" }}>
+                  <span style={{ color: "#3b82f6", flexShrink: 0 }}>✓</span>
                   <span style={{ fontSize: 13, color: "rgba(226,232,240,0.65)" }}>{imp}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          {/* Grid — 2 col desktop, 1 col mobile */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 14 }}>
             {projects.slice(1).map((p) => (
-              <div key={p.num} style={{ padding: "28px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", position: "relative", overflow: "hidden" }}>
+              <div key={p.num} style={{ padding: isMobile ? "22px" : "28px", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(255,255,255,0.02)", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: -40, right: -40, width: 120, height: 120, borderRadius: "50%", background: `radial-gradient(circle,${p.accent}0a,transparent 70%)`, pointerEvents: "none" }} />
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
                   <span style={{ fontSize: 11, color: "rgba(226,232,240,0.2)", fontFamily: "monospace" }}>{p.num}</span>
                   <span style={pill(p.cat, p.accent)}>{p.cat}</span>
                 </div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 10, lineHeight: 1.3 }}>{p.title}</h3>
-                <p style={{ fontSize: 13, color: "rgba(226,232,240,0.44)", lineHeight: 1.75, marginBottom: 16 }}>{p.desc}</p>
-                <ul style={{ marginBottom: 18, display: "flex", flexDirection: "column", gap: 6 }}>
+                <h3 style={{ fontSize: isMobile ? 15 : 17, fontWeight: 700, letterSpacing: "-0.02em", color: "#e2e8f0", marginBottom: 8, lineHeight: 1.3 }}>{p.title}</h3>
+                <p style={{ fontSize: 13, color: "rgba(226,232,240,0.44)", lineHeight: 1.75, marginBottom: 14 }}>{p.desc}</p>
+                <ul style={{ marginBottom: 16, display: "flex", flexDirection: "column", gap: 6 }}>
                   {p.impact.map((imp) => (
                     <li key={imp} style={{ display: "flex", gap: 8, fontSize: 12, color: "rgba(226,232,240,0.48)", alignItems: "flex-start" }}>
                       <span style={{ color: p.accent, flexShrink: 0, marginTop: 2 }}>▸</span>{imp}
@@ -370,7 +396,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {p.tags.map((t) => <span key={t} style={tag()}>{t}</span>)}
+                  {p.tags.map((t) => <span key={t} style={tagStyle()}>{t}</span>)}
                 </div>
               </div>
             ))}
@@ -379,17 +405,17 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "120px 2rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+      <section id="contact" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: sectionPad, borderTop: "1px solid rgba(255,255,255,0.04)" }}>
         <div style={{ maxWidth: 620 }}>
-          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 18 }}>CONTACT</p>
-          <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <p style={{ fontSize: 11, color: "#6366f1", letterSpacing: "0.15em", fontWeight: 700, marginBottom: 16 }}>CONTACT</p>
+          <h2 style={{ fontSize: headingSize, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 14, background: "linear-gradient(135deg,#e2e8f0,rgba(226,232,240,0.45))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Let&apos;s build something together
           </h2>
-          <p style={{ fontSize: 16, color: "rgba(226,232,240,0.42)", lineHeight: 1.8, marginBottom: 40 }}>
+          <p style={{ fontSize: 15, color: "rgba(226,232,240,0.42)", lineHeight: 1.8, marginBottom: 32 }}>
             Open to new opportunities, collaborations, and interesting problems. Drop me a message — I&apos;ll get back to you.
           </p>
 
-          <div style={{ display: "flex", gap: 10, marginBottom: 40 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 10, marginBottom: 32 }}>
             {[
               { icon: "✉", text: "aashishanil530@gmail.com", href: "mailto:aashishanil530@gmail.com" },
               { icon: "↗", text: "LinkedIn", href: "https://linkedin.com/in/aashishanil" },
@@ -406,15 +432,15 @@ export default function Home() {
               <input key={f.key} type={f.type} placeholder={f.placeholder}
                 value={formData[f.key as keyof typeof formData]}
                 onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
-                style={{ width: "100%", padding: "14px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 14, outline: "none", boxSizing: "border-box" }}
+                style={{ width: "100%", padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 15, outline: "none", boxSizing: "border-box" }}
               />
             ))}
             <textarea placeholder="Your message" rows={5} value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              style={{ width: "100%", padding: "14px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 14, outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+              style={{ width: "100%", padding: "14px 16px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "rgba(255,255,255,0.03)", color: "#e2e8f0", fontSize: 15, outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
             />
             <button onClick={() => console.log("Form:", formData)}
-              style={{ padding: "14px 32px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", width: "fit-content" }}>
+              style={{ padding: "14px 32px", borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", width: isMobile ? "100%" : "fit-content" }}>
               Send Message →
             </button>
           </div>
@@ -422,7 +448,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.04)", padding: "32px 2rem", textAlign: "center", fontSize: 13, color: "rgba(226,232,240,0.18)" }}>
+      <footer style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.04)", padding: "28px 1.25rem", textAlign: "center", fontSize: 12, color: "rgba(226,232,240,0.18)" }}>
         © 2026 Aashish Anil · Built with Next.js
       </footer>
     </main>
