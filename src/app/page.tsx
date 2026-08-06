@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import AskAI from "@/components/AskAI";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -18,6 +19,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [askOpen, setAskOpen] = useState(false);
   const isMobile = useIsMobile();
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -451,6 +453,22 @@ export default function Home() {
       <footer style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255,255,255,0.04)", padding: "28px 1.25rem", textAlign: "center", fontSize: 12, color: "rgba(226,232,240,0.18)" }}>
         © 2026 Aashish Anil · Built with Next.js
       </footer>
+
+      {/* Floating Ask AI chat */}
+      <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 100, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 10 }}>
+        {askOpen && (
+          <div style={{ width: "min(360px, calc(100vw - 2.5rem))", background: "#0b0b12", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}>
+            <AskAI />
+          </div>
+        )}
+        <button
+          onClick={() => setAskOpen(!askOpen)}
+          style={{ width: 52, height: 52, borderRadius: "50%", border: "1px solid rgba(99,102,241,0.4)", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontSize: 20, cursor: "pointer", boxShadow: "0 8px 30px rgba(99,102,241,0.4)" }}
+          aria-label="Ask AI"
+        >
+          {askOpen ? "✕" : "✦"}
+        </button>
+      </div>
     </main>
   );
 }
